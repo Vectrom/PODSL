@@ -7,8 +7,14 @@ set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
 set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
 add_subdirectory(googletest)
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TestUtilsConstexpr.h.in ${CMAKE_CURRENT_BINARY_DIR}/TestUtilsConstexpr.h)
+
 add_executable(${MODULE_NAME}
     ExampleTests.cpp
+    Graph.cpp
+    TestUtils.cpp
+    TestUtils.h
+    ${CMAKE_CURRENT_BINARY_DIR}/TestUtilsConstexpr.h
 )
 
 target_include_directories(${MODULE_NAME}

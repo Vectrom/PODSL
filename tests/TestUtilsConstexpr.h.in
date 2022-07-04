@@ -1,0 +1,6 @@
+#pragma once
+
+namespace TestUtils
+{
+    constexpr const char * examplesDir = "@CMAKE_CURRENT_SOURCE_DIR@/examples";
+}

@@ -1,12 +1,16 @@
 set(MODULE_NAME PODSL)
 
 set(MODULE_SOURCES
+    Graph.cpp
     ModelBase.cpp
+    Simulation.cpp
 )
 
 set(MODULE_HEADERS
-    Aspen.h
+    Graph.h
     ModelBase.h
+    PODSL.h
+    Simulation.h
 )
 
 add_library(${MODULE_NAME}
@@ -25,4 +29,4 @@ target_include_directories(${MODULE_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_link_libraries(${MODULE_NAME} PRIVATE Boost::graph)
+target_link_libraries(${MODULE_NAME} PUBLIC Boost::graph)
