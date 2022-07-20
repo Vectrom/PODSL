@@ -1,5 +1,7 @@
+#pragma once
+
 class ModelBase
 {
     public:
-        static bool testMethod();
+        virtual void calculateOneStep() = 0;
 };

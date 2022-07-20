@@ -2,15 +2,19 @@ set(MODULE_NAME PODSL)
 
 set(MODULE_SOURCES
     Graph.cpp
+    MajorityModel.cpp
     ModelBase.cpp
     Simulation.cpp
+    VoterModel.cpp
 )
 
 set(MODULE_HEADERS
     Graph.h
+    MajorityModel.h
     ModelBase.h
     PODSL.h
     Simulation.h
+    VoterModel.h
 )
 
 add_library(${MODULE_NAME}

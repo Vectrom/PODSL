@@ -10,8 +10,8 @@ add_subdirectory(googletest)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TestUtilsConstexpr.h.in ${CMAKE_CURRENT_BINARY_DIR}/TestUtilsConstexpr.h)
 
 add_executable(${MODULE_NAME}
-    ExampleTests.cpp
     Graph.cpp
+    Simulation.cpp
     TestUtils.cpp
     TestUtils.h
     ${CMAKE_CURRENT_BINARY_DIR}/TestUtilsConstexpr.h
