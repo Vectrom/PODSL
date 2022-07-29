@@ -13,10 +13,18 @@ void Simulation::nextStep()
 
 void Simulation::startSimulation()
 {
-    while (!_model.getGraph().hasConsensus())
+    uint64_t iteration = 1;
+
+    while (iteration == _maxIterations || !_model.getGraph().hasConsensus())
     {
         _model.calculateOneStep();
+        iteration++;
     }
+}
+
+void Simulation::setMaxIterations(uint64_t maxIterations)
+{
+    _maxIterations = maxIterations;
 }
 
 void Simulation::printInfoAboutChange(size_t vertexIndex, int opinion) const
