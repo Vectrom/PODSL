@@ -22,8 +22,11 @@ public:
     size_t getNumberOfVertices() const;
     int getOpinion(size_t index) const;
     void setOpinion(size_t index, int opinion);
-    std::set<size_t> getAdjacentVerticesIndexes(size_t index);
-    size_t getRandomVertexIndex();
+    std::set<size_t> getAdjacentVerticesIndexes(size_t index) const;
+    size_t getRandomVertexIndex() const;
+    size_t getRandomAdjacentVertexIndex(size_t index) const;
+    bool hasAdjacentVertices(size_t index) const;
+    bool hasConsensus() const;
 
 private:
     boost::adjacency_list <boost::vecS, boost::vecS, boost::undirectedS, vertex_info> _graph;

@@ -43,3 +43,4 @@ TEST(Graph, GetAdjacentVertices) {
     const std::set<size_t> adjacentVertices = graph.getAdjacentVerticesIndexes(1);
     ASSERT_EQ(adjacentVertices, std::set<size_t>({0, 3}));
 }
+

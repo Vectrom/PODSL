@@ -1,13 +1,14 @@
 #pragma once
-#include "Graph.h"
 #include "ModelBase.h"
 
 class Simulation
 {
 public:
-    Simulation(const ModelBase& model, const Graph& graph);
+    Simulation(ModelBase& model);
+    void nextStep();
+    void startSimulation();
 
 private:
-    const ModelBase& _model;
-    Graph _graph;
+    void printInfoAboutChange(size_t vertexIndex, int opinion) const;
+    ModelBase& _model;
 };

@@ -41,17 +41,48 @@ void Graph::setOpinion(size_t index, int opinion)
     _graph[index].label = opinion;
 }
 
-std::set<size_t> Graph::getAdjacentVerticesIndexes(size_t index)
+std::set<size_t> Graph::getAdjacentVerticesIndexes(size_t index) const
 {
     auto adjacentVertices = boost::adjacent_vertices(index, _graph);
     return std::set<size_t>(adjacentVertices.first, adjacentVertices.second);
 }
 
-size_t Graph::getRandomVertexIndex()
+size_t Graph::getRandomVertexIndex() const
 {
     std::uniform_int_distribution<std::mt19937::result_type> udist(0, static_cast<unsigned int>(getNumberOfVertices() - 1));
     std::random_device rd;
     std::mt19937 rng(rd());
 
     return udist(rng);
+}
+
+size_t Graph::getRandomAdjacentVertexIndex(size_t index) const
+{
+    std::set<size_t> adjacentVertices = getAdjacentVerticesIndexes(index);
+    std::uniform_int_distribution<std::mt19937::result_type> udist(0, static_cast<unsigned int>(adjacentVertices.size() - 1));
+    std::random_device rd;
+    std::mt19937 rng(rd());
+
+    auto it = adjacentVertices.begin();
+    std::advance(it, udist(rng));
+    return *it;
+}
+
+bool Graph::hasAdjacentVertices(size_t index) const
+{
+    auto adjacentVertices = getAdjacentVerticesIndexes(index);
+    return !adjacentVertices.empty();
+}
+
+bool Graph::hasConsensus() const
+{
+    int opinionInPreviousVertex = _graph[0].label;
+    for(int i = 0; i < _graph.m_vertices.size(); i++)
+    {
+        if (_graph[i].label != opinionInPreviousVertex)
+            return false;
+
+        opinionInPreviousVertex = _graph[i].label;
+    }
+    return true;
 }

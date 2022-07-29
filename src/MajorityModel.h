@@ -3,5 +3,7 @@
 
 class MajorityModel : public ModelBase
 {
-    virtual void calculateOneStep() {}
+public:
+    MajorityModel(const Graph& graph);
+    virtual void calculateOneStep();
 };
