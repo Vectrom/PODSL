@@ -1,6 +1,6 @@
 [submodule "tests/googletest"]
 	path = tests/googletest
 	url = https://github.com/google/googletest.git
-[submodule "submodules/boost"]
-	path = submodules/boost
-	url = https://github.com/boostorg/boost
+[submodule "submodules/cmake-conan"]
+	path = submodules/cmake-conan
+	url = https://github.com/conan-io/cmake-conan
