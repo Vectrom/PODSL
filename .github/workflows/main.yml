@@ -1,0 +1,129 @@
+name: PODSL
+
+env:
+  CONAN_REVISIONS_ENABLED: 1
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      Windows:
+        description: 'Build Windows?'     
+        required: true
+        default: 'true'
+      MacOS:
+        description: 'Build MacOS?'     
+        required: true
+        default: 'false'
+      Linux:
+        description: 'Build Linux?'     
+        required: true
+        default: 'false'
+
+jobs:
+  Win:
+    runs-on: windows-latest
+    if: github.event.inputs.Windows == 'true' || github.event_name == 'push'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Build
+        run: |
+          cmake -E remove_directory build
+          cmake -G "Visual Studio 16 2019" -B build
+          cmake --build build --config Release
+
+      - name: Test
+        run: |
+          cd tests
+          ctest -VV -C Release
+
+      # - name: Pack
+      #   run: |
+      #     cd build
+      #     cpack
+
+      # - name: Upload
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: PODSL-Win64
+      #     path: build/PODSL-*.*-*.zip
+
+  Mac:
+    runs-on: macos-latest
+    if: github.event.inputs.MacOS == 'true'  || github.event_name == 'push'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Configure Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Build
+        run: |
+          cmake -E remove_directory build
+          cmake -G "Xcode" -B build
+          cmake --build build --config Release
+
+      - name: Test
+        run: |
+          cd tests
+          ctest -VV -C Release
+
+      # - name: Pack
+      #   run: |
+      #     cd build
+      #     cpack
+
+      # - name: Upload
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: PODSL-MacOS
+      #     path: build/PODSL-*.*-*.zip
+
+  Lnx:
+    runs-on: ubuntu-latest
+    if:  github.event.inputs.Linux == 'true'  || github.event_name == 'push'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Configure Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Build
+        run: |
+          cmake -E remove_directory build
+          cmake -DCMAKE_BUILD_TYPE=Release -B build
+          cmake --build build --config Release
+          
+      - name: Test
+        run: |
+          cd build
+          ctest -VV -C Release
+
+      # - name: Pack
+      #   run: |
+      #     cd build
+      #     cpack
+
+      # - name: Upload
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: PODSL-Linux
+      #     path: build/PODSL-*.*-*.zip
+
