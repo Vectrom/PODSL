@@ -77,7 +77,7 @@ bool Graph::hasAdjacentVertices(size_t index) const
 bool Graph::hasConsensus() const
 {
     int opinionInPreviousVertex = _graph[0].label;
-    for(int i = 0; i < _graph.m_vertices.size(); i++)
+    for(size_t i = 0; i < _graph.m_vertices.size(); i++)
     {
         if (_graph[i].label != opinionInPreviousVertex)
             return false;

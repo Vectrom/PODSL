@@ -1,10 +1,16 @@
 #pragma once
 
+#if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable : 4458 4459)
+#endif
+
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
+
+#if defined(_MSC_VER)
 #pragma warning(pop)
+#endif
 
 #include <string>
 
