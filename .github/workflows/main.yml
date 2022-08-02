@@ -41,7 +41,7 @@ jobs:
 
       - name: Test
         run: |
-          cd tests
+          cd build/tests
           ctest -VV -C Release
 
       # - name: Pack
@@ -77,7 +77,7 @@ jobs:
 
       - name: Test
         run: |
-          cd tests
+          cd build/tests
           ctest -VV -C Release
 
       # - name: Pack
@@ -113,7 +113,7 @@ jobs:
           
       - name: Test
         run: |
-          cd build
+          cd build/tests
           ctest -VV -C Release
 
       # - name: Pack
