@@ -5,6 +5,7 @@ set(MODULE_SOURCES
     MajorityModel.cpp
     ModelBase.cpp
     Simulation.cpp
+    SznajdModel.cpp
     VoterModel.cpp
 )
 
@@ -14,6 +15,7 @@ set(MODULE_HEADERS
     ModelBase.h
     PODSL.h
     Simulation.h
+    SznajdModel.h
     VoterModel.h
 )
 

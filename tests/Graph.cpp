@@ -25,22 +25,22 @@ TEST(Graph, GetOpinion)
 {
     Graph graph;
     ASSERT_TRUE(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
-    ASSERT_EQ(graph.getOpinion(0), -1);
+    ASSERT_EQ(graph.getOpinion(0), 1);
 }
 
 TEST(Graph, SetOpinion)
 {
     Graph graph;
     ASSERT_TRUE(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
-    ASSERT_EQ(graph.getOpinion(0), -1);
-    graph.setOpinion(0, 1);
     ASSERT_EQ(graph.getOpinion(0), 1);
+    graph.setOpinion(0, -1);
+    ASSERT_EQ(graph.getOpinion(0), -1);
 }
 
 TEST(Graph, GetAdjacentVertices) {
     Graph graph;
     ASSERT_TRUE(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
     const std::set<size_t> adjacentVertices = graph.getAdjacentVerticesIndexes(1);
-    ASSERT_EQ(adjacentVertices, std::set<size_t>({0, 3}));
+    ASSERT_EQ(adjacentVertices, std::set<size_t>({0, 2, 3}));
 }
 
