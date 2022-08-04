@@ -1,5 +1,8 @@
 [requires]
 boost/1.79.0
 
+[options]
+boost:without_json=True
+
 [generators]
 cmake_find_package_multi

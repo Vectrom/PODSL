@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.15.5)
 
 project(PODSL VERSION 1.0.0)
 
+if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+    set(PODSL_STANDALONE ON)
+endiF()
+
 ###### Conan package manager configuration ######
 execute_process(COMMAND "python" "-m" "pip" "install" "conan")
 
@@ -17,16 +21,29 @@ include(submodules/cmake-conan/conan.cmake)
 #                  URL https://api.bintray.com/conan/bincrafters/public-conan
 #                  VERIFY_SSL True)     
 
-conan_cmake_run(CONANFILE conanfile.txt
-                BUILD missing
-                CONFIGURATION_TYPES "Release;Debug"
-                BASIC_SETUP NO_OUTPUT_DIRS CMAKE_TARGETS KEEP_RPATHS UPDATE
-                )
+if(APPLE)
+    conan_cmake_run(CONANFILE conanfile.txt
+                    BUILD missing
+                    CONFIGURATION_TYPES "Release;Debug"
+                    BASIC_SETUP NO_OUTPUT_DIRS CMAKE_TARGETS KEEP_RPATHS UPDATE
+                    SETTINGS compiler.cppstd=17
+                    )
+else()
+    conan_cmake_run(CONANFILE conanfile.txt
+                    BUILD missing
+                    CONFIGURATION_TYPES "Release;Debug"
+                    BASIC_SETUP NO_OUTPUT_DIRS CMAKE_TARGETS KEEP_RPATHS UPDATE
+                    )
+endif()
 
 list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_BINARY_DIR}")
 list(INSERT CMAKE_PREFIX_PATH 0 "${CMAKE_BINARY_DIR}")
 
-find_package(Boost COMPONENTS graph REQUIRED CONFIG)
+if(UNIX AND NOT APPLE)
+    find_package(Boost COMPONENTS graph REQUIRED)
+else()
+    find_package(Boost COMPONENTS graph REQUIRED CONFIG)
+endif()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -46,7 +63,9 @@ elseif(APPLE)
 endif()
 
 # tests
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT tests)
+if(PODSL_STANDALONE)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
+    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT tests)
+endif()
 
 add_subdirectory(src)

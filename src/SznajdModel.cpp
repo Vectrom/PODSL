@@ -1,5 +1,4 @@
 #include "SznajdModel.h"
-#include <windows.h>
 
 SznajdModel::SznajdModel(const Graph& graph) :
     ModelBase(graph)
@@ -28,6 +27,4 @@ void SznajdModel::calculateOneStep()
         }
 
     }
-    std::string a = std::string("Agent A") + std::to_string(agentA) + " agent B" + std::to_string(agentB);
-    OutputDebugString(a.c_str());
 }
