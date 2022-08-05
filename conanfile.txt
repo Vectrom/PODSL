@@ -1,5 +1,6 @@
 [requires]
 boost/1.79.0
+rapidjson/1.1.0 
 
 [options]
 boost:without_json=True

@@ -31,6 +31,11 @@ size_t Graph::getNumberOfVertices() const
     return _graph.m_vertices.size();
 }
 
+std::string Graph::getIndex(size_t index) const
+{
+    return _graph[index].index;
+}
+
 int Graph::getOpinion(size_t index) const
 {
     return _graph[index].label;

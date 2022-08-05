@@ -6,6 +6,6 @@ class SznajdModel : public ModelBase
 {
 public:
     SznajdModel(const Graph& graph);
-    virtual void calculateOneStep();
+    virtual std::map<std::string, int> calculateOneStep();
 
 };

@@ -5,5 +5,5 @@ class MajorityModel : public ModelBase
 {
 public:
     MajorityModel(const Graph& graph);
-    virtual void calculateOneStep();
+    virtual std::map<std::string, int> calculateOneStep();
 };

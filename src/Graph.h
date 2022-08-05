@@ -26,6 +26,7 @@ public:
     bool load(const std::string& filePath);
     bool save(const std::string& filePath);
     size_t getNumberOfVertices() const;
+    std::string getIndex(size_t index) const;
     int getOpinion(size_t index) const;
     void setOpinion(size_t index, int opinion);
     std::set<size_t> getAdjacentVerticesIndexes(size_t index) const;

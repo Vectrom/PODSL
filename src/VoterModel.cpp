@@ -4,7 +4,7 @@ VoterModel::VoterModel(const Graph& graph) :
     ModelBase(graph)
 {}
 
-void VoterModel::calculateOneStep()
+std::map<std::string, int> VoterModel::calculateOneStep()
 {
     size_t agentA = _graph.getRandomVertexIndex();
     while(!_graph.hasAdjacentVertices(agentA))
@@ -12,5 +12,10 @@ void VoterModel::calculateOneStep()
 
     size_t agentB = _graph.getRandomAdjacentVertexIndex(agentA);
     
-    _graph.setOpinion(agentA, _graph.getOpinion(agentB));
+    std::map<std::string, int> changes;
+    int newOpinion = _graph.getOpinion(agentB);
+    _graph.setOpinion(agentA, newOpinion);
+    changes[_graph.getIndex(agentA)] = newOpinion;
+
+    return changes;
 }

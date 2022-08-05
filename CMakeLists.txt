@@ -44,6 +44,7 @@ if(UNIX AND NOT APPLE)
 else()
     find_package(Boost COMPONENTS graph REQUIRED CONFIG)
 endif()
+find_package(RapidJSON REQUIRED CONFIG)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

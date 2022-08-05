@@ -5,7 +5,7 @@ class ModelBase
 {
     public:
         ModelBase(const Graph& graph);
-        virtual void calculateOneStep() = 0;
+        virtual std::map<std::string, int> calculateOneStep() = 0;
         const Graph& getGraph() const { return _graph; };
 
     protected:

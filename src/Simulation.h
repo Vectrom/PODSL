@@ -10,7 +10,8 @@ public:
     void setMaxIterations(uint64_t maxIterations);
 
 private:
-    void printInfoAboutChange(size_t vertexIndex, int opinion) const;
+    void printInfoAboutChange(const std::map<std::string, int>& changes) const;
     ModelBase& _model;
     uint64_t _maxIterations;
+    uint64_t _iteration = 1;
 };

@@ -4,13 +4,15 @@ SznajdModel::SznajdModel(const Graph& graph) :
     ModelBase(graph)
 {}
 
-void SznajdModel::calculateOneStep()
+std::map<std::string, int> SznajdModel::calculateOneStep()
 {
     size_t agentA = _graph.getRandomVertexIndex();
     while (!_graph.hasAdjacentVertices(agentA))
         agentA = _graph.getRandomVertexIndex();
 
     size_t agentB = _graph.getRandomAdjacentVertexIndex(agentA);
+
+    std::map<std::string, int> changes;
 
     if(_graph.getOpinion(agentA) == _graph.getOpinion(agentB))
     {
@@ -24,7 +26,8 @@ void SznajdModel::calculateOneStep()
         {
             const int opinion = _graph.getOpinion(neighbor);
             _graph.setOpinion(neighbor, -opinion);
+            changes[_graph.getIndex(neighbor)] = -opinion;
         }
-
     }
+    return changes;
 }

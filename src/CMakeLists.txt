@@ -38,4 +38,5 @@ target_include_directories(${MODULE_NAME}
 target_link_libraries(${MODULE_NAME} PUBLIC
                         Boost::graph
                         -lstdc++fs # to handle std::filesystem on GCC8
+                        RapidJSON::RapidJSON
                         )
