@@ -34,6 +34,7 @@ public:
     size_t getRandomAdjacentVertexIndex(size_t index) const;
     bool hasAdjacentVertices(size_t index) const;
     bool hasConsensus() const;
+    double getAverageOpinion() const;
 
 private:
     boost::adjacency_list <boost::vecS, boost::vecS, boost::undirectedS, vertex_info> _graph;

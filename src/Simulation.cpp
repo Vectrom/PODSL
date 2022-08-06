@@ -29,7 +29,16 @@ void Simulation::setMaxIterations(uint64_t maxIterations)
     _maxIterations = maxIterations;
 }
 
-//#include<windows.h>
+void Simulation::enableAverageOpinion()
+{
+    _averageOpinion = true;
+}
+
+void Simulation::disableAverageOpinion()
+{
+    _averageOpinion = false;
+}
+
 void Simulation::printInfoAboutChange(const std::map<std::string, int>& changes) const
 {
     rapidjson::Document document;
@@ -49,13 +58,24 @@ void Simulation::printInfoAboutChange(const std::map<std::string, int>& changes)
     }
     document.AddMember("changes", changesArray, allocator);
 
+    rapidjson::Value statsArray(rapidjson::kArrayType);
+    if(_averageOpinion)
+    {
+        rapidjson::Value averageOpinion(rapidjson::kObjectType);
+        rapidjson::Value values(rapidjson::kArrayType);
+        values.PushBack(_model.getGraph().getAverageOpinion(), allocator);
+
+        averageOpinion
+            .AddMember("name", "average-opinion", allocator)
+            .AddMember("values", values, allocator);
+    
+        statsArray.PushBack(averageOpinion, allocator);
+    }
+    document.AddMember("stats", statsArray, allocator);
+
     rapidjson::StringBuffer buffer;
-
-    buffer.Clear();
-
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     document.Accept(writer);
 
     std::cout << "[STEP]" << buffer.GetString();
-    //OutputDebugString(buffer.GetString());
 }

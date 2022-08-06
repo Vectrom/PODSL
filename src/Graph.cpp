@@ -91,3 +91,12 @@ bool Graph::hasConsensus() const
     }
     return true;
 }
+
+double Graph::getAverageOpinion() const
+{
+    int sum = 0;
+    for (const auto& vertex : _graph.m_vertices)
+        sum += vertex.m_property.label;
+
+    return static_cast<double>(sum) / getNumberOfVertices();
+}
