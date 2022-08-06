@@ -40,3 +40,20 @@ TEST(Simulation, SimpleSznajdSimulation)
     ASSERT_TRUE(graph.save(tempDir + "test.dot"));
     std::filesystem::remove_all(tempDir);
 }
+
+TEST(Simulation, SaveResultInfoToFile)
+{
+    Graph graph;
+
+    ASSERT_TRUE(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
+    const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSave/";
+    std::filesystem::create_directory(tempDir);
+
+    VoterModel model(graph);
+    Simulation simulation(model);
+    simulation.enableAverageOpinion();
+    simulation.startSimulation();
+
+    simulation.saveResultInfoToFile(tempDir + "result.json");
+    std::filesystem::remove_all(tempDir);
+}

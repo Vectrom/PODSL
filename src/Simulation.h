@@ -10,6 +10,7 @@ public:
     void setMaxIterations(uint64_t maxIterations);
     void enableAverageOpinion();
     void disableAverageOpinion();
+    void saveResultInfoToFile(const std::string& output);
 
 private:
     void printInfoAboutChange(const std::map<std::string, int>& changes) const;
@@ -17,4 +18,5 @@ private:
     uint64_t _maxIterations;
     uint64_t _iteration = 1;
     bool _averageOpinion = false;
+    std::vector<double> _averageOpinions;
 };
