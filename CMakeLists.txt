@@ -41,10 +41,11 @@ list(INSERT CMAKE_PREFIX_PATH 0 "${CMAKE_BINARY_DIR}")
 
 if(UNIX AND NOT APPLE)
     find_package(Boost COMPONENTS graph REQUIRED)
+    find_package(RapidJSON REQUIRED)
 else()
     find_package(Boost COMPONENTS graph REQUIRED CONFIG)
+    find_package(RapidJSON REQUIRED CONFIG)
 endif()
-find_package(RapidJSON REQUIRED CONFIG)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
