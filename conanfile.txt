@@ -1,9 +1,8 @@
 [requires]
-boost/1.79.0
+boost/1.79.0@vectrom/stable
 rapidjson/1.1.0 
 
 [options]
-boost:shared=False
 boost:without_atomic=True
 boost:without_chrono=True
 boost:without_container=True
