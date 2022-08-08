@@ -11,15 +11,10 @@ execute_process(COMMAND "python" "-m" "pip" "install" "conan")
 
 include(submodules/cmake-conan/conan.cmake)
 
-# conan_add_remote(NAME vectrom
-#                  INDEX 0
-#                  URL https://artifactory.plociennik.net/artifactory/api/conan/conan
-#                  VERIFY_SSL True)     
-
-# conan_add_remote(NAME bincrafters 
-#                  INDEX 1
-#                  URL https://api.bintray.com/conan/bincrafters/public-conan
-#                  VERIFY_SSL True)     
+conan_add_remote(NAME vectrom
+                 INDEX 0
+                 URL https://artifactory.plociennik.net/artifactory/api/conan/conan
+                 VERIFY_SSL True)     
 
 if(APPLE)
     conan_cmake_run(CONANFILE conanfile.txt
