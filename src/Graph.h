@@ -24,7 +24,7 @@ class Graph
 {
 public:
     bool load(const std::string& filePath);
-    bool save(const std::string& filePath);
+    bool save(const std::string& filePath) const;
     size_t getNumberOfVertices() const;
     std::string getIndex(size_t index) const;
     int getOpinion(size_t index) const;

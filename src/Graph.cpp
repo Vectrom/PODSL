@@ -14,7 +14,7 @@ bool Graph::load(const std::string& filePath)
     return boost::read_graphviz(graphStream, _graph, _properties);
 }
 
-bool Graph::save(const std::string& filePath)
+bool Graph::save(const std::string& filePath) const
 {
     std::ofstream graphStream(filePath, std::ofstream::out);
     if (graphStream.fail())

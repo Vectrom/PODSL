@@ -1,5 +1,5 @@
 [requires]
-boost/1.79.0@vectrom/stable
+boost/1.79.0@vectrom/stable#8e4caf3a157aadfc373a29333463edac
 rapidjson/1.1.0 
 
 [options]

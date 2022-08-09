@@ -1,29 +1,60 @@
 #include "Simulation.h"
+#include "SznajdModel.h"
+#include "VoterModel.h"
 #define RAPIDJSON_NOMEMBERITERATORCLASS 
 #include <rapidjson/document.h>
+#include <rapidjson/istreamwrapper.h>
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/prettywriter.h>
 #include <iostream>
 Simulation::Simulation(ModelBase& model) :
-    _model(model)
+    _model(std::make_shared<VoterModel>(model.getGraph()))
 {
 
+}
+
+Simulation::Simulation(const std::string& pathToConfig)
+{
+#include <rapidjson/document.h>
+#include <fstream>
+
+    std::ifstream inputStream(pathToConfig);
+    rapidjson::IStreamWrapper iStreamWrapper(inputStream);
+
+    rapidjson::Document document;
+    document.ParseStream(iStreamWrapper);
+
+    //std::shared_ptr<Graph> graph = std::make_shared<Graph>();
+    Graph* graph = new Graph();
+    graph->load(document["pathToGraph"].GetString());
+
+    std::string modelName = document["model"].GetString();
+    if (modelName == "VoterModel")
+        _model = std::make_shared<VoterModel>(*graph);
+    else if (modelName == "SznajdModel")
+        _model = std::make_shared<SznajdModel>(*graph);
+
+    if (document.HasMember("maxIterations"))
+        setMaxIterations(document["maxIterations"].GetUint64());
+
+    if (document.HasMember("averageOpinion") && document["averageOpinion"].GetBool())
+        enableAverageOpinion();
 }
 
 void Simulation::nextStep()
 {
-    _model.calculateOneStep();
+    _model->calculateOneStep();
 }
 
 void Simulation::startSimulation()
 {
-    while (_iteration == _maxIterations || !_model.getGraph().hasConsensus())
+    while (_iteration == _maxIterations || !_model->getGraph().hasConsensus())
     {
-        std::map<std::string, int> changes = _model.calculateOneStep();
+        std::map<std::string, int> changes = _model->calculateOneStep();
 
         if(_averageOpinion)
         {
-            _averageOpinions.push_back(_model.getGraph().getAverageOpinion());
+            _averageOpinions.push_back(_model->getGraph().getAverageOpinion());
         }
 
         printInfoAboutChange(changes);
@@ -94,7 +125,7 @@ void Simulation::saveResultInfoToFile(const std::string& output)
     document.SetObject();
     rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
 
-    document.AddMember("step", _iteration, allocator);
+    document.AddMember("step", _iteration-1, allocator);
 
     rapidjson::Value statsArray(rapidjson::kArrayType);
     if (_averageOpinion)
@@ -119,4 +150,9 @@ void Simulation::saveResultInfoToFile(const std::string& output)
     rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(oStreamWrapper);
     document.Accept(writer);
 
+}
+
+ModelBase& Simulation::getModel() const
+{
+    return *_model;
 }

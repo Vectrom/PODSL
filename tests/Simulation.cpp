@@ -18,9 +18,10 @@ TEST(Simulation, SimpleSimulation)
     Simulation simulation(model);
     simulation.startSimulation();
 
-    graph = model.getGraph();
+    graph = simulation.getModel().getGraph();
     ASSERT_TRUE(graph.save(tempDir + "test.dot"));
-    std::filesystem::remove_all(tempDir);
+    simulation.saveResultInfoToFile(tempDir + "result.json");
+    //Bstd::filesystem::remove_all(tempDir);
 }
 
 //only save result without check
@@ -29,16 +30,17 @@ TEST(Simulation, SimpleSznajdSimulation)
     Graph graph;
 
     ASSERT_TRUE(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
-    const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSimulation/";
+    const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSznajdSimulation/";
     std::filesystem::create_directory(tempDir);
 
     SznajdModel model(graph);
     Simulation simulation(model);
     simulation.startSimulation();
 
-    graph = model.getGraph();
+    graph = simulation.getModel().getGraph();
     ASSERT_TRUE(graph.save(tempDir + "test.dot"));
-    std::filesystem::remove_all(tempDir);
+    simulation.saveResultInfoToFile(tempDir + "result.json");
+    //std::filesystem::remove_all(tempDir);
 }
 
 TEST(Simulation, SaveResultInfoToFile)
@@ -55,5 +57,20 @@ TEST(Simulation, SaveResultInfoToFile)
     simulation.startSimulation();
 
     simulation.saveResultInfoToFile(tempDir + "result.json");
-    std::filesystem::remove_all(tempDir);
+    //std::filesystem::remove_all(tempDir);
+}
+
+TEST(Simulation, SimulationFromConfig)
+{
+    Simulation simulation(TestUtils::getExamplesDir("simpleConfig.json"));
+    simulation.startSimulation();
+
+    const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testConfig/";
+    std::filesystem::create_directory(tempDir);
+
+    const Graph& graph = simulation.getModel().getGraph();
+    ASSERT_TRUE(graph.save(tempDir + "test.dot"));
+    simulation.saveResultInfoToFile(tempDir + "result.json");
+    EXPECT_TRUE(false);
+    //std::filesystem::remove_all(tempDir);
 }

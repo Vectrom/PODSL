@@ -1,7 +1,7 @@
 name: PODSL
 
-# env:
-#   CONAN_REVISIONS_ENABLED: 1
+env:
+  CONAN_REVISIONS_ENABLED: 1
 
 on:
   # push:
