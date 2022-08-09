@@ -94,7 +94,7 @@ void Simulation::saveResultInfoToFile(const std::string& output)
     document.SetObject();
     rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
 
-    document.AddMember("step", _iteration, allocator);
+    document.AddMember("step", _iteration-1, allocator);
 
     rapidjson::Value statsArray(rapidjson::kArrayType);
     if (_averageOpinion)
