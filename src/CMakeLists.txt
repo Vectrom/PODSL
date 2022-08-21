@@ -14,6 +14,7 @@ set(MODULE_HEADERS
     MajorityModel.h
     ModelBase.h
     PODSL.h
+    PODSLEnums.h
     Simulation.h
     SznajdModel.h
     VoterModel.h

@@ -1,14 +1,12 @@
 #pragma once
 #include "Graph.h"
 
+enum class ModelType;
+
 class ModelBase
 {
     public:
-        ModelBase(const Graph& graph);
-        virtual std::map<std::string, int> calculateOneStep() = 0;
-        const Graph& getGraph() const { return _graph; };
-
-    protected:
-        Graph _graph;
-
+        virtual std::map<std::string, int> calculateOneStep(Graph& graph) = 0;
+        virtual ModelType getModelType() const;
+        virtual ~ModelBase() = default;
 };
