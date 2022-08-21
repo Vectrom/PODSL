@@ -1,7 +1,7 @@
 #pragma once
 #include "Graph.h"
 
-namespace PODSL
+namespace podsl
 {
     enum class ModelType;
 

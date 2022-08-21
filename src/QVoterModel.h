@@ -1,7 +1,7 @@
 #pragma once
 #include "ModelBase.h"
 
-namespace PODSL
+namespace podsl
 {
     class QVoterModel : public ModelBase
     {

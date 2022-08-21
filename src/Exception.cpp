@@ -1,7 +1,7 @@
 #include "Exception.h"
 #include <sstream>
 
-using namespace PODSL;
+using namespace podsl;
 
 static constexpr const char* ErrorCodePrefix = "ERROR(";
 static constexpr const char* ErrorCodeSuffix = ")";

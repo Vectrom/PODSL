@@ -2,7 +2,7 @@
 #include "Exception.h"
 #include <random>
 
-using namespace PODSL;
+using namespace podsl;
 
 void Graph::load(const std::string& filePath)
 {

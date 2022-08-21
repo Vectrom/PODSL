@@ -1,8 +1,8 @@
 #include "ErrorCodes.h"
 
-using namespace PODSL;
+using namespace podsl;
 
-std::string PODSL::getErrorDescription(ErrorCode errorCode, const std::string& suffix)
+std::string podsl::getErrorDescription(ErrorCode errorCode, const std::string& suffix)
 {
     std::string description;
     switch(errorCode)

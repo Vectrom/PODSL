@@ -2,7 +2,7 @@
 #include "ModelBase.h"
 #include <type_traits>
 
-namespace PODSL
+namespace podsl
 {
     class Simulation
     {

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace PODSL
+namespace podsl
 {
     enum class ModelType
     {

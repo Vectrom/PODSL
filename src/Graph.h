@@ -14,7 +14,7 @@
 
 #include <string>
 
-namespace PODSL
+namespace podsl
 {
     struct vertex_info
     {

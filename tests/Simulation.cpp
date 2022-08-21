@@ -5,7 +5,7 @@
 #include "Simulation.h"
 #include "TestUtils.h"
 
-using namespace PODSL;
+using namespace podsl;
 
 //only save result without check
 TEST(Simulation, SimpleSimulation)

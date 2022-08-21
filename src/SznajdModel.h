@@ -2,7 +2,7 @@
 #include "Graph.h"
 #include "ModelBase.h"
 
-namespace PODSL
+namespace podsl
 {
     class SznajdModel : public ModelBase
     {

@@ -5,7 +5,7 @@
 #include "SznajdModel.h"
 #include "VoterModel.h"
 
-using namespace PODSL;
+using namespace podsl;
 TEST(Model, ModelType) {
     EXPECT_EQ(MajorityModel().getModelType(), ModelType::Majority);
     EXPECT_EQ(SznajdModel().getModelType(), ModelType::Sznajd);

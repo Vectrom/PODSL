@@ -2,7 +2,7 @@
 #include "ErrorCodes.h"
 #include <exception>
 
-namespace PODSL
+namespace podsl
 {
     class Exception : public std::exception
     {

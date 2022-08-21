@@ -9,7 +9,7 @@
 #include <rapidjson/prettywriter.h>
 #include <iostream>
 
-using namespace PODSL;
+using namespace podsl;
 
 void Simulation::nextStep()
 {
