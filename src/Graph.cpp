@@ -1,9 +1,10 @@
-#include <Graph.h>
+#include "Graph.h"
+#include "Exception.h"
 #include <random>
 
 using namespace PODSL;
 
-bool Graph::load(const std::string& filePath)
+void Graph::load(const std::string& filePath)
 {
     _properties.property("node_id", boost::get(&vertex_info::index, _graph));
 
@@ -11,21 +12,21 @@ bool Graph::load(const std::string& filePath)
 
     std::ifstream graphStream(filePath, std::ifstream::in);
     if (graphStream.fail())
-        return false;
+        throw Exception(ErrorCode::ReadingFileError, "Path to file: " + filePath);
 
-    return boost::read_graphviz(graphStream, _graph, _properties);
+    if (!boost::read_graphviz(graphStream, _graph, _properties))
+        throw Exception(ErrorCode::ParsingGraphvizError);
 }
 
-bool Graph::save(const std::string& filePath) const
+void Graph::save(const std::string& filePath) const
 {
     std::ofstream graphStream(filePath, std::ofstream::out);
     if (graphStream.fail())
-        return false;
+        throw Exception(ErrorCode::SavingFileError, "Path to file: " + filePath);
 
     boost::write_graphviz_dp(graphStream, _graph, _properties);
 
     graphStream.close();
-    return true;
 }
 
 size_t Graph::getNumberOfVertices() const

@@ -1,6 +1,7 @@
 set(MODULE_NAME PODSL)
 
 set(MODULE_SOURCES
+    ErrorCodes.cpp
     Exception.cpp
     Graph.cpp
     MajorityModel.cpp
@@ -12,6 +13,7 @@ set(MODULE_SOURCES
 )
 
 set(MODULE_HEADERS
+    ErrorCodes.h
     Exception.h
     Graph.h
     MajorityModel.h

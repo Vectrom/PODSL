@@ -1,8 +1,10 @@
 #pragma once
+#include "Exception.h"
 #include "Graph.h"
 #include "MajorityModel.h"
 #include "ModelBase.h"
 #include "PODSLEnums.h"
+#include "QVoterModel.h"
 #include "Simulation.h"
 #include "SznajdModel.h"
 #include "VoterModel.h"

@@ -12,7 +12,7 @@ TEST(Simulation, SimpleSimulation)
 {
     Graph graph;
 
-    ASSERT_TRUE(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
+    ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
     const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSimulation/";
     std::filesystem::create_directory(tempDir);
 
@@ -23,9 +23,9 @@ TEST(Simulation, SimpleSimulation)
     simulation.startSimulation();
 
     graph = simulation.getGraph();
-    ASSERT_TRUE(graph.save(tempDir + "test.dot"));
+    ASSERT_NO_THROW(graph.save(tempDir + "test.dot"));
     simulation.saveResultInfoToFile(tempDir + "result.json");
-    //Bstd::filesystem::remove_all(tempDir);
+    std::filesystem::remove_all(tempDir);
 }
 
 //only save result without check
@@ -33,7 +33,7 @@ TEST(Simulation, SimpleSznajdSimulation)
 {
     Graph graph;
 
-    ASSERT_TRUE(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
+    ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
     const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSznajdSimulation/";
     std::filesystem::create_directory(tempDir);
 
@@ -43,16 +43,16 @@ TEST(Simulation, SimpleSznajdSimulation)
     simulation.startSimulation();
 
     graph = simulation.getGraph();
-    ASSERT_TRUE(graph.save(tempDir + "test.dot"));
+    ASSERT_NO_THROW(graph.save(tempDir + "test.dot"));
     simulation.saveResultInfoToFile(tempDir + "result.json");
-    //std::filesystem::remove_all(tempDir);
+    std::filesystem::remove_all(tempDir);
 }
 
 TEST(Simulation, SaveResultInfoToFile)
 {
     Graph graph;
 
-    ASSERT_TRUE(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
+    ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
     const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSave/";
     std::filesystem::create_directory(tempDir);
 
@@ -64,7 +64,7 @@ TEST(Simulation, SaveResultInfoToFile)
     simulation.startSimulation();
 
     simulation.saveResultInfoToFile(tempDir + "result.json");
-    //std::filesystem::remove_all(tempDir);
+    std::filesystem::remove_all(tempDir);
 }
 
 //TEST(Simulation, SimulationFromConfig)
@@ -77,7 +77,7 @@ TEST(Simulation, SaveResultInfoToFile)
 //    std::filesystem::create_directory(tempDir);
 //
 //    const Graph& graph = simulation.getGraph();
-//    ASSERT_TRUE(graph.save(tempDir + "test.dot"));
+//    ASSERT_NO_THROW(graph.save(tempDir + "test.dot"));
 //    simulation.saveResultInfoToFile(tempDir + "result.json");
-//    //std::filesystem::remove_all(tempDir);
+//    std::filesystem::remove_all(tempDir);
 //}

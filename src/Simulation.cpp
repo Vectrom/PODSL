@@ -18,7 +18,7 @@ void Simulation::nextStep()
 
 void Simulation::startSimulation()
 {
-    while (_iteration != _maxIterations && !_graph.hasConsensus())
+    while (_iteration != _maxIterations + 1 && !_graph.hasConsensus())
     {
         std::map<std::string, int> changes = _model->calculateOneStep(_graph);
 
