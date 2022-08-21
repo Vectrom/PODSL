@@ -11,6 +11,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TestUtilsConstexpr.h.in ${CMAKE_CURRE
 
 add_executable(${MODULE_NAME}
     Graph.cpp
+    Model.cpp
     Simulation.cpp
     TestUtils.cpp
     TestUtils.h

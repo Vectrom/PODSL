@@ -1,29 +1,28 @@
 #include "Simulation.h"
+#include "MajorityModel.h"
+#include "SznajdModel.h"
+#include "VoterModel.h"
 #define RAPIDJSON_NOMEMBERITERATORCLASS 
 #include <rapidjson/document.h>
+#include <rapidjson/istreamwrapper.h>
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/prettywriter.h>
 #include <iostream>
-Simulation::Simulation(ModelBase& model) :
-    _model(model)
-{
-
-}
 
 void Simulation::nextStep()
 {
-    _model.calculateOneStep();
+    _model->calculateOneStep(_graph);
 }
 
 void Simulation::startSimulation()
 {
-    while (_iteration == _maxIterations || !_model.getGraph().hasConsensus())
+    while (_iteration != _maxIterations && !_graph.hasConsensus())
     {
-        std::map<std::string, int> changes = _model.calculateOneStep();
+        std::map<std::string, int> changes = _model->calculateOneStep(_graph);
 
         if(_averageOpinion)
         {
-            _averageOpinions.push_back(_model.getGraph().getAverageOpinion());
+            _averageOpinions.push_back(_graph.getAverageOpinion());
         }
 
         printInfoAboutChange(changes);
@@ -89,7 +88,6 @@ void Simulation::printInfoAboutChange(const std::map<std::string, int>& changes)
 
 void Simulation::saveResultInfoToFile(const std::string& output)
 {
-
     rapidjson::Document document;
     document.SetObject();
     rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
@@ -118,5 +116,44 @@ void Simulation::saveResultInfoToFile(const std::string& output)
 
     rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(oStreamWrapper);
     document.Accept(writer);
+}
 
+ModelBase& Simulation::getModel() const
+{
+    return *_model;
+}
+
+void Simulation::readConfig(const std::string& pathToConfig)
+{
+    std::ifstream inputStream(pathToConfig);
+    rapidjson::IStreamWrapper iStreamWrapper(inputStream);
+
+    rapidjson::Document document;
+    document.ParseStream(iStreamWrapper);
+
+    _graph.load(document["pathToGraph"].GetString());
+
+    std::string modelName = document["model"].GetString();
+    if (modelName == "MajorityModel")
+        _model = std::make_unique<MajorityModel>();
+    else if (modelName == "SznajdModel")
+        _model = std::make_unique<SznajdModel>();
+    else if (modelName == "VoterModel")
+        _model = std::make_unique<VoterModel>();
+
+    if (document.HasMember("maxIterations"))
+        setMaxIterations(document["maxIterations"].GetUint64());
+
+    if (document.HasMember("averageOpinion") && document["averageOpinion"].GetBool())
+        enableAverageOpinion();
+}
+
+const Graph& Simulation::getGraph() const 
+{
+    return _graph;
+}
+
+void Simulation::setGraph(Graph graph)
+{
+    _graph = std::move(graph);
 }

@@ -5,7 +5,6 @@
 class VoterModel : public ModelBase
 {
 public:
-    VoterModel(const Graph& graph);
-    virtual std::map<std::string, int> calculateOneStep();
-
+    virtual std::map<std::string, int> calculateOneStep(Graph& graph);
+    virtual ModelType getModelType() const;
 };

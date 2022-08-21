@@ -4,6 +4,6 @@
 class MajorityModel : public ModelBase
 {
 public:
-    MajorityModel(const Graph& graph);
-    virtual std::map<std::string, int> calculateOneStep();
+    virtual std::map<std::string, int> calculateOneStep(Graph& graph);
+    virtual ModelType getModelType() const;
 };

@@ -1,6 +1,7 @@
 #include "ModelBase.h"
+#include "PODSLEnums.h"
 
-ModelBase::ModelBase(const Graph& graph) :
-    _graph(graph)
+ModelType ModelBase::getModelType() const
 {
+    return ModelType::Custom;
 }

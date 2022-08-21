@@ -18,14 +18,12 @@ conan_add_remote(NAME vectrom
 
 if(APPLE)
     conan_cmake_run(CONANFILE conanfile.txt
-                    BUILD missing
                     CONFIGURATION_TYPES "Release;Debug"
                     BASIC_SETUP NO_OUTPUT_DIRS CMAKE_TARGETS KEEP_RPATHS UPDATE
                     SETTINGS compiler.cppstd=17
                     )
 else()
     conan_cmake_run(CONANFILE conanfile.txt
-                    BUILD missing
                     CONFIGURATION_TYPES "Release;Debug"
                     BASIC_SETUP NO_OUTPUT_DIRS CMAKE_TARGETS KEEP_RPATHS UPDATE
                     )

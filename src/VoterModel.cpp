@@ -1,21 +1,23 @@
 #include "VoterModel.h"
+#include "PODSLEnums.h"
 
-VoterModel::VoterModel(const Graph& graph) :
-    ModelBase(graph)
-{}
-
-std::map<std::string, int> VoterModel::calculateOneStep()
+std::map<std::string, int> VoterModel::calculateOneStep(Graph& graph)
 {
-    size_t agentA = _graph.getRandomVertexIndex();
-    while(!_graph.hasAdjacentVertices(agentA))
-        agentA = _graph.getRandomVertexIndex();
+    size_t agentA = graph.getRandomVertexIndex();
+    while(!graph.hasAdjacentVertices(agentA))
+        agentA = graph.getRandomVertexIndex();
 
-    size_t agentB = _graph.getRandomAdjacentVertexIndex(agentA);
+    size_t agentB = graph.getRandomAdjacentVertexIndex(agentA);
     
     std::map<std::string, int> changes;
-    int newOpinion = _graph.getOpinion(agentB);
-    _graph.setOpinion(agentA, newOpinion);
-    changes[_graph.getIndex(agentA)] = newOpinion;
+    int newOpinion = graph.getOpinion(agentB);
+    graph.setOpinion(agentA, newOpinion);
+    changes[graph.getIndex(agentA)] = newOpinion;
 
     return changes;
+}
+
+ModelType VoterModel::getModelType() const
+{
+    return ModelType::Voter;
 }
