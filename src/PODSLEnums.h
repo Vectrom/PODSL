@@ -1,7 +1,11 @@
-enum class ModelType
+namespace PODSL
 {
-    Custom,
-    Majority,
-    Sznajd,
-    Voter
-};
+    enum class ModelType
+    {
+        Custom,
+        Majority,
+        QVoter,
+        Sznajd,
+        Voter
+    };
+}

@@ -1,20 +1,24 @@
 set(MODULE_NAME PODSL)
 
 set(MODULE_SOURCES
+    Exception.cpp
     Graph.cpp
     MajorityModel.cpp
     ModelBase.cpp
+    QVoterModel.cpp
     Simulation.cpp
     SznajdModel.cpp
     VoterModel.cpp
 )
 
 set(MODULE_HEADERS
+    Exception.h
     Graph.h
     MajorityModel.h
     ModelBase.h
     PODSL.h
     PODSLEnums.h
+    QVoterModel.h
     Simulation.h
     SznajdModel.h
     VoterModel.h

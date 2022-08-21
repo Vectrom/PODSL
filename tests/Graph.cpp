@@ -3,6 +3,7 @@
 #include "Graph.h"
 #include "TestUtils.h"
 
+using namespace PODSL;
 TEST(Graph, LoadGraph)
 {
     Graph graph;

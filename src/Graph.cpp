@@ -1,6 +1,8 @@
 #include <Graph.h>
 #include <random>
 
+using namespace PODSL;
+
 bool Graph::load(const std::string& filePath)
 {
     _properties.property("node_id", boost::get(&vertex_info::index, _graph));

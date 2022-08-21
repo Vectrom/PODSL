@@ -1,6 +1,8 @@
 #include "VoterModel.h"
 #include "PODSLEnums.h"
 
+using namespace PODSL;
+
 std::map<std::string, int> VoterModel::calculateOneStep(Graph& graph)
 {
     size_t agentA = graph.getRandomVertexIndex();

@@ -2,9 +2,12 @@
 #include "Graph.h"
 #include "ModelBase.h"
 
-class VoterModel : public ModelBase
+namespace PODSL
 {
-public:
-    virtual std::map<std::string, int> calculateOneStep(Graph& graph);
-    virtual ModelType getModelType() const;
-};
+    class VoterModel : public ModelBase
+    {
+    public:
+        virtual std::map<std::string, int> calculateOneStep(Graph& graph);
+        virtual ModelType getModelType() const;
+    };
+}

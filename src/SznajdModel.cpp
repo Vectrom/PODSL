@@ -1,6 +1,8 @@
 #include "SznajdModel.h"
 #include "PODSLEnums.h"
 
+using namespace PODSL;
+
 std::map<std::string, int> SznajdModel::calculateOneStep(Graph& graph)
 {
     size_t agentA = graph.getRandomVertexIndex();

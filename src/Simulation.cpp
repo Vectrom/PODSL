@@ -9,6 +9,8 @@
 #include <rapidjson/prettywriter.h>
 #include <iostream>
 
+using namespace PODSL;
+
 void Simulation::nextStep()
 {
     _model->calculateOneStep(_graph);

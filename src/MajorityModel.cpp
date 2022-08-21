@@ -1,6 +1,8 @@
 #include "MajorityModel.h"
 #include "PODSLEnums.h"
 
+using namespace PODSL;
+
 std::map<std::string, int> MajorityModel::calculateOneStep(Graph& graph)
 {
     (void)graph;

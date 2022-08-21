@@ -1,10 +1,9 @@
 #pragma once
-#include "Graph.h"
 #include "ModelBase.h"
 
 namespace PODSL
 {
-    class SznajdModel : public ModelBase
+    class QVoterModel : public ModelBase
     {
     public:
         virtual std::map<std::string, int> calculateOneStep(Graph& graph);
