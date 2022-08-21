@@ -1,6 +1,7 @@
 #pragma once
 #include "ModelBase.h"
 #include <type_traits>
+
 class Simulation
 {
 public:
@@ -11,12 +12,12 @@ public:
     void enableAverageOpinion();
     void disableAverageOpinion();
     void saveResultInfoToFile(const std::string& output);
-    template <typename ModelT, typename = std::enable_if<std::is_base_of_v<ModelBase, ModelT>>::type>
+    template <typename ModelT, typename = typename std::enable_if<std::is_base_of_v<ModelBase, ModelT>>::type>
     void setModel(ModelT model)
     {
         _model = std::make_unique<ModelT>(std::move(model));
     }
-    const Graph& getGraph() const { return _graph; };
+    const Graph& getGraph() const;
     void setGraph(Graph graph);
     void readConfig(const std::string& pathToConfig);
     ModelBase& getModel() const;

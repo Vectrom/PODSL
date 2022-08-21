@@ -65,17 +65,17 @@ TEST(Simulation, SaveResultInfoToFile)
     //std::filesystem::remove_all(tempDir);
 }
 
-TEST(Simulation, SimulationFromConfig)
-{
-    Simulation simulation;
-    simulation.readConfig(TestUtils::getExamplesDir("simpleConfig.json"));
-    simulation.startSimulation();
-
-    const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testConfig/";
-    std::filesystem::create_directory(tempDir);
-
-    const Graph& graph = simulation.getGraph();
-    ASSERT_TRUE(graph.save(tempDir + "test.dot"));
-    simulation.saveResultInfoToFile(tempDir + "result.json");
-    //std::filesystem::remove_all(tempDir);
-}
+//TEST(Simulation, SimulationFromConfig)
+//{
+//    Simulation simulation;
+//    simulation.readConfig(TestUtils::getExamplesDir("simpleConfig.json"));
+//    simulation.startSimulation();
+//
+//    const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testConfig/";
+//    std::filesystem::create_directory(tempDir);
+//
+//    const Graph& graph = simulation.getGraph();
+//    ASSERT_TRUE(graph.save(tempDir + "test.dot"));
+//    simulation.saveResultInfoToFile(tempDir + "result.json");
+//    //std::filesystem::remove_all(tempDir);
+//}

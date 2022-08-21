@@ -1,4 +1,5 @@
 #include "Simulation.h"
+#include "MajorityModel.h"
 #include "SznajdModel.h"
 #include "VoterModel.h"
 #define RAPIDJSON_NOMEMBERITERATORCLASS 
@@ -87,7 +88,6 @@ void Simulation::printInfoAboutChange(const std::map<std::string, int>& changes)
 
 void Simulation::saveResultInfoToFile(const std::string& output)
 {
-
     rapidjson::Document document;
     document.SetObject();
     rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
@@ -134,16 +134,23 @@ void Simulation::readConfig(const std::string& pathToConfig)
     _graph.load(document["pathToGraph"].GetString());
 
     std::string modelName = document["model"].GetString();
-    if (modelName == "VoterModel")
-        _model = std::make_unique<VoterModel>();
+    if (modelName == "MajorityModel")
+        _model = std::make_unique<MajorityModel>();
     else if (modelName == "SznajdModel")
         _model = std::make_unique<SznajdModel>();
+    else if (modelName == "VoterModel")
+        _model = std::make_unique<VoterModel>();
 
     if (document.HasMember("maxIterations"))
         setMaxIterations(document["maxIterations"].GetUint64());
 
     if (document.HasMember("averageOpinion") && document["averageOpinion"].GetBool())
         enableAverageOpinion();
+}
+
+const Graph& Simulation::getGraph() const 
+{
+    return _graph;
 }
 
 void Simulation::setGraph(Graph graph)
