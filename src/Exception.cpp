@@ -8,7 +8,6 @@ static constexpr const char* ErrorCodeSuffix = ")";
 
 Exception::Exception(ErrorCode errorCode, const std::string& errorMessage) :
     std::exception(),
-    _errorCode(errorCode),
     _errorMessage(createErrorMessage(errorCode, errorMessage))
 {
 }

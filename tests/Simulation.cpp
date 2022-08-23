@@ -91,7 +91,7 @@ TEST(Simulation, MajoritySimulationWithParameterFromConfig)
 {
     TestUtils::ModelParams modelParams;
     modelParams.groupSize = 2;
-    const std::string pathToConfigFile = TestUtils::saveConfigFile("test2Config.json", ModelType::Majority, TestUtils::getExamplesDir("simpleGraph.dot"), 50, true, modelParams);
+    const std::string pathToConfigFile = TestUtils::saveConfigFile("testConfig.json", ModelType::Majority, TestUtils::getExamplesDir("simpleGraph.dot"), 50, true, modelParams);
 
     Simulation simulation;
     ASSERT_NO_THROW(simulation.readConfig(pathToConfigFile));

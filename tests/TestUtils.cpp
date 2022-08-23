@@ -16,7 +16,7 @@ std::string TestUtils::saveConfigFile(const std::string& fileName, ModelType mod
 {
     const std::string tempDir = std::filesystem::temp_directory_path().string();
 
-    const std::string pathToConfig{ tempDir + fileName };
+    const std::string pathToConfig{ tempDir + '/' + fileName };
     std::ofstream configFile(pathToConfig);
     configFile << "{\n";
     configFile << "    \"model\": \"" << modelTypeToString(modelType) << "\",\n";

@@ -11,7 +11,6 @@ namespace podsl
         
         virtual const char* what() const noexcept override;
     private:
-        ErrorCode _errorCode;
         std::string _errorMessage;
 
         static std::string createErrorMessage(ErrorCode errorCode, const std::string& errorMessage);
