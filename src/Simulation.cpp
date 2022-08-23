@@ -1,4 +1,5 @@
 #include "Simulation.h"
+#include "PODSLEnums.h"
 #include "MajorityModel.h"
 #include "SznajdModel.h"
 #include "VoterModel.h"
@@ -13,11 +14,16 @@ using namespace podsl;
 
 void Simulation::nextStep()
 {
+    if(_iteration == 1)
+        checkRequirements();
+
     _model->calculateOneStep(_graph);
 }
 
 void Simulation::startSimulation()
 {
+    checkRequirements();
+
     while (_iteration != _maxIterations + 1 && !_graph.hasConsensus())
     {
         std::map<std::string, int> changes = _model->calculateOneStep(_graph);
@@ -88,6 +94,15 @@ void Simulation::printInfoAboutChange(const std::map<std::string, int>& changes)
     std::cout << "[STEP]" << buffer.GetString() << std::endl;
 }
 
+void podsl::Simulation::checkRequirements() const
+{
+    if (_model->getModelType() == ModelType::Majority)
+    {
+        MajorityModel& majorityModel = dynamic_cast<MajorityModel&>(*_model);
+        majorityModel.checkMajorityModelRequirements(_graph);
+    }
+}
+
 void Simulation::saveResultInfoToFile(const std::string& output)
 {
     rapidjson::Document document;
@@ -137,11 +152,18 @@ void Simulation::readConfig(const std::string& pathToConfig)
 
     std::string modelName = document["model"].GetString();
     if (modelName == "MajorityModel")
-        _model = std::make_unique<MajorityModel>();
+    {
+        uint64_t groupSize = document["modelParams"]["groupSize"].GetUint64();
+        _model = std::make_unique<MajorityModel>(groupSize);
+    }
     else if (modelName == "SznajdModel")
+    {
         _model = std::make_unique<SznajdModel>();
+    }
     else if (modelName == "VoterModel")
+    {
         _model = std::make_unique<VoterModel>();
+    }
 
     if (document.HasMember("maxIterations"))
         setMaxIterations(document["maxIterations"].GetUint64());

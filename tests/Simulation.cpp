@@ -2,6 +2,7 @@
 #include <filesystem>
 #include "SznajdModel.h"
 #include "VoterModel.h"
+#include "PODSLEnums.h"
 #include "Simulation.h"
 #include "TestUtils.h"
 
@@ -67,17 +68,42 @@ TEST(Simulation, SaveResultInfoToFile)
     std::filesystem::remove_all(tempDir);
 }
 
-//TEST(Simulation, SimulationFromConfig)
-//{
-//    Simulation simulation;
-//    simulation.readConfig(TestUtils::getExamplesDir("simpleConfig.json"));
-//    simulation.startSimulation();
-//
-//    const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testConfig/";
-//    std::filesystem::create_directory(tempDir);
-//
-//    const Graph& graph = simulation.getGraph();
-//    ASSERT_NO_THROW(graph.save(tempDir + "test.dot"));
-//    simulation.saveResultInfoToFile(tempDir + "result.json");
-//    std::filesystem::remove_all(tempDir);
-//}
+TEST(Simulation, BasicVoterSimulationFromConfig)
+{
+    const std::string pathToConfigFile = TestUtils::saveConfigFile("testConfig.json", ModelType::Voter, TestUtils::getExamplesDir("simpleGraph.dot"), 100, true);
+    
+    Simulation simulation;
+    ASSERT_NO_THROW(simulation.readConfig(pathToConfigFile));
+    simulation.startSimulation();
+
+    const std::string tempDir = std::filesystem::temp_directory_path().string() + "/BasicVoterSimulationFromConfig/";
+    std::filesystem::create_directory(tempDir);
+
+    const Graph& graph = simulation.getGraph();
+    ASSERT_NO_THROW(graph.save(tempDir + "test.dot"));
+    simulation.saveResultInfoToFile(tempDir + "result.json");
+
+    std::filesystem::remove(pathToConfigFile);
+    std::filesystem::remove_all(tempDir);
+}
+
+TEST(Simulation, MajoritySimulationWithParameterFromConfig)
+{
+    TestUtils::ModelParams modelParams;
+    modelParams.groupSize = 2;
+    const std::string pathToConfigFile = TestUtils::saveConfigFile("test2Config.json", ModelType::Majority, TestUtils::getExamplesDir("simpleGraph.dot"), 50, true, modelParams);
+
+    Simulation simulation;
+    ASSERT_NO_THROW(simulation.readConfig(pathToConfigFile));
+    simulation.startSimulation();
+
+    const std::string tempDir = std::filesystem::temp_directory_path().string() + "/MajoritySimulationWithParameterFromConfig/";
+    std::filesystem::create_directory(tempDir);
+
+    const Graph& graph = simulation.getGraph();
+    ASSERT_NO_THROW(graph.save(tempDir + "test.dot"));
+    simulation.saveResultInfoToFile(tempDir + "result.json");
+
+    std::filesystem::remove(pathToConfigFile);
+    std::filesystem::remove_all(tempDir);
+}

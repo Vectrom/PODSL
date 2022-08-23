@@ -22,6 +22,12 @@ std::string podsl::getErrorDescription(ErrorCode errorCode, const std::string& s
     case ErrorCode::SavingFileError:
         description = "Saving file error";
         break;
+    case ErrorCode::TooLargeGroupError:
+        description = "Group size cannot be greater than number of vertices in graph";
+        break;
+    case ErrorCode::NotCompleteGraphError:
+        description = "Graph is not complete";
+        break;  
     }
 
     if(!description.empty())

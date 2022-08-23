@@ -1,5 +1,6 @@
 #include "Graph.h"
 #include "Exception.h"
+#include <boost/graph/graph_utility.hpp>
 #include <random>
 
 using namespace podsl;
@@ -32,6 +33,11 @@ void Graph::save(const std::string& filePath) const
 size_t Graph::getNumberOfVertices() const
 {
     return _graph.m_vertices.size();
+}
+
+size_t Graph::getNumberOfEdges() const
+{
+    return _graph.m_edges.size();
 }
 
 std::string Graph::getIndex(size_t index) const
@@ -102,4 +108,26 @@ double Graph::getAverageOpinion() const
         sum += vertex.m_property.label;
 
     return static_cast<double>(sum) / getNumberOfVertices();
+}
+
+bool Graph::isComplete() const
+{
+    size_t numberOfVertices = getNumberOfVertices();
+    if (getNumberOfEdges() != (numberOfVertices * (numberOfVertices-1) / 2))
+        return false;
+
+    if (hasSelfLoops())
+        return false;
+
+    return true;
+}
+
+bool podsl::Graph::hasSelfLoops() const
+{
+    for (const auto& edge : _graph.m_edges)
+    {
+        if (edge.m_source == edge.m_target)
+            return true;
+    }
+    return false;
 }

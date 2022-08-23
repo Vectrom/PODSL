@@ -1,6 +1,0 @@
-{
-    "model": "VoterModel",
-    "pathToGraph": "D:\\PODSL\\tests\\examples\\simpleGraph.dot",
-    "maxIterations": 100,
-    "averageOpinion": true
-}

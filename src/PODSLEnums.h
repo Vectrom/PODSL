@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace podsl
 {
@@ -10,4 +11,7 @@ namespace podsl
         Sznajd,
         Voter
     };
+
+    std::string modelTypeToString(ModelType modelType);
+    ModelType stringToModelType(const std::string& modelType);
 }

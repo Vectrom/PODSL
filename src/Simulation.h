@@ -25,6 +25,7 @@ namespace podsl
         ModelBase& getModel() const;
 
     private:
+        void checkRequirements() const;
         void printInfoAboutChange(const std::map<std::string, int>& changes) const;
         std::unique_ptr<ModelBase> _model;
         uint64_t _maxIterations = 0;

@@ -28,6 +28,7 @@ namespace podsl
         void load(const std::string& filePath);
         void save(const std::string& filePath) const;
         size_t getNumberOfVertices() const;
+        size_t getNumberOfEdges() const;
         std::string getIndex(size_t index) const;
         int getOpinion(size_t index) const;
         void setOpinion(size_t index, int opinion);
@@ -37,6 +38,8 @@ namespace podsl
         bool hasAdjacentVertices(size_t index) const;
         bool hasConsensus() const;
         double getAverageOpinion() const;
+        bool isComplete() const;
+        bool hasSelfLoops() const;
 
     private:
         boost::adjacency_list <boost::vecS, boost::vecS, boost::undirectedS, vertex_info> _graph;
