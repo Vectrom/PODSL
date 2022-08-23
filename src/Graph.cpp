@@ -152,7 +152,7 @@ bool Graph::hasConsensus() const
 
 double Graph::getAverageOpinion() const
 {
-    int sum = std::reduce(_graph.m_vertices.begin(), _graph.m_vertices.end(), 0,
+    int sum = std::accumulate(_graph.m_vertices.begin(), _graph.m_vertices.end(), 0,
         [](int a, const auto& vertex) {
         return a + vertex.m_property.label;
     });
