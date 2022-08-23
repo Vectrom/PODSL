@@ -19,5 +19,5 @@ namespace TestUtils
     };
 
     std::string getExamplesDir(const std::string& name);
-    std::string saveConfigFile(const std::string& fileName, ModelType modelType, const std::string& pathToGraph, uint64_t maxIterations = 0, bool averageOpinion = false, ModelParams modelParams = {});
+    std::string saveConfigFile(const std::string& fileName, ModelType modelType, const std::string& pathToGraph, uint64_t maxIterations = 0, bool averageOpinion = false, bool printInfoAboutChanges = false, ModelParams modelParams = {});
 }

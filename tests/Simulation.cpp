@@ -70,7 +70,7 @@ TEST(Simulation, SaveResultInfoToFile)
 
 TEST(Simulation, BasicVoterSimulationFromConfig)
 {
-    const std::string pathToConfigFile = TestUtils::saveConfigFile("testConfig.json", ModelType::Voter, TestUtils::getExamplesDir("simpleGraph.dot"), 100, true);
+    const std::string pathToConfigFile = TestUtils::saveConfigFile("testConfig.json", ModelType::Voter, TestUtils::getExamplesDir("simpleGraph.dot"), 100, true, false);
     
     Simulation simulation;
     ASSERT_NO_THROW(simulation.readConfig(pathToConfigFile));
@@ -91,7 +91,7 @@ TEST(Simulation, MajoritySimulationWithParameterFromConfig)
 {
     TestUtils::ModelParams modelParams;
     modelParams.groupSize = 2;
-    const std::string pathToConfigFile = TestUtils::saveConfigFile("testConfig.json", ModelType::Majority, TestUtils::getExamplesDir("simpleGraph.dot"), 50, true, modelParams);
+    const std::string pathToConfigFile = TestUtils::saveConfigFile("testConfig.json", ModelType::Majority, TestUtils::getExamplesDir("simpleGraph.dot"), 50, true, true, modelParams);
 
     Simulation simulation;
     ASSERT_NO_THROW(simulation.readConfig(pathToConfigFile));

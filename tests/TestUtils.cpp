@@ -12,7 +12,7 @@ std::string TestUtils::getExamplesDir(const std::string& name)
     return std::string(TestUtils::examplesDir) + '/' + name;
 }
 
-std::string TestUtils::saveConfigFile(const std::string& fileName, ModelType modelType, const std::string& pathToGraph, uint64_t maxIterations, bool averageOpinion, ModelParams modelParams)
+std::string TestUtils::saveConfigFile(const std::string& fileName, ModelType modelType, const std::string& pathToGraph, uint64_t maxIterations, bool averageOpinion, bool printInfoAboutChanges, ModelParams modelParams)
 {
     const std::string tempDir = std::filesystem::temp_directory_path().string();
 
@@ -27,11 +27,13 @@ std::string TestUtils::saveConfigFile(const std::string& fileName, ModelType mod
             configFile << "        \"groupSize\": " << modelParams.groupSize << "\n";
         configFile << "    },\n";
     }
-    configFile << "    \"pathToGraph\": \"" << pathToGraph << "\",\n";
+    configFile << "    \"pathToGraph\": \"" << pathToGraph << "\"";
     if(maxIterations != 0)
-        configFile << "    \"maxIterations\": " << maxIterations << ",\n";
+        configFile << ",\n" << "    \"maxIterations\": " << maxIterations;
     if(averageOpinion)
-        configFile << "    \"averageOpinion\": " << std::boolalpha << averageOpinion << "\n";
+        configFile << ",\n" << "    \"averageOpinion\": " << std::boolalpha << averageOpinion;
+    if (printInfoAboutChanges)
+        configFile << ",\n" << "    \"printInfoAboutChanges\": " << std::boolalpha << printInfoAboutChanges << "\n";
     configFile << "}";
     configFile.close();
 

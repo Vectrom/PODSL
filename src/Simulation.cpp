@@ -17,7 +17,7 @@ void Simulation::nextStep()
     if(_iteration == 1)
         checkRequirements();
 
-    _model->calculateOneStep(_graph);
+    doSingleStep();
 }
 
 void Simulation::startSimulation()
@@ -26,14 +26,7 @@ void Simulation::startSimulation()
 
     while (_iteration != _maxIterations + 1 && !_graph.hasConsensus())
     {
-        std::map<std::string, int> changes = _model->calculateOneStep(_graph);
-
-        if(_averageOpinion)
-        {
-            _averageOpinions.push_back(_graph.getAverageOpinion());
-        }
-
-        printInfoAboutChange(changes);
+        doSingleStep();
         _iteration++;
     }
 }
@@ -52,7 +45,7 @@ void Simulation::disableAverageOpinion()
 {
     _averageOpinion = false;
 }
-
+#include<windows.h>
 void Simulation::printInfoAboutChange(const std::map<std::string, int>& changes) const
 {
     rapidjson::Document document;
@@ -92,6 +85,7 @@ void Simulation::printInfoAboutChange(const std::map<std::string, int>& changes)
     document.Accept(writer);
 
     std::cout << "[STEP]" << buffer.GetString() << std::endl;
+    OutputDebugString(buffer.GetString());
 }
 
 void podsl::Simulation::checkRequirements() const
@@ -101,6 +95,19 @@ void podsl::Simulation::checkRequirements() const
         MajorityModel& majorityModel = dynamic_cast<MajorityModel&>(*_model);
         majorityModel.checkMajorityModelRequirements(_graph);
     }
+}
+
+void Simulation::doSingleStep()
+{
+    std::map<std::string, int> changes = _model->calculateOneStep(_graph);
+
+    if (_averageOpinion)
+    {
+        _averageOpinions.push_back(_graph.getAverageOpinion());
+    }
+
+    if (_printingInfoAboutChanges)
+        printInfoAboutChange(changes);
 }
 
 void Simulation::saveResultInfoToFile(const std::string& output)
@@ -140,6 +147,16 @@ ModelBase& Simulation::getModel() const
     return *_model;
 }
 
+void Simulation::enablePrintingInfoAboutChanges()
+{
+    _printingInfoAboutChanges = true;
+}
+
+void Simulation::disablePrintingInfoAboutChanges()
+{
+    _printingInfoAboutChanges = false;
+}
+
 void Simulation::readConfig(const std::string& pathToConfig)
 {
     std::ifstream inputStream(pathToConfig);
@@ -170,6 +187,9 @@ void Simulation::readConfig(const std::string& pathToConfig)
 
     if (document.HasMember("averageOpinion") && document["averageOpinion"].GetBool())
         enableAverageOpinion();
+
+    if (document.HasMember("printInfoAboutChanges") && document["printInfoAboutChanges"].GetBool())
+        enablePrintingInfoAboutChanges();
 }
 
 const Graph& Simulation::getGraph() const 
