@@ -104,6 +104,6 @@ TEST(Simulation, MajoritySimulationWithParameterFromConfig)
     ASSERT_NO_THROW(graph.save(tempDir + "test.dot"));
     simulation.saveResultInfoToFile(tempDir + "result.json");
 
-    //std::filesystem::remove(pathToConfigFile);
+    std::filesystem::remove(pathToConfigFile);
     std::filesystem::remove_all(tempDir);
 }
