@@ -1,11 +1,36 @@
 #include "Graph.h"
 #include "Exception.h"
+#include <boost/graph/graphml.hpp>
 #include <boost/graph/graph_utility.hpp>
+#include <filesystem>
+#include <numeric>
 #include <random>
 
 using namespace podsl;
 
 void Graph::load(const std::string& filePath)
+{
+    const std::string extension = std::filesystem::path(filePath).extension().string();
+    if (extension == ".dot")
+        loadFromGraphviz(filePath);
+    else if (extension == ".xml")
+        loadFromGraphml(filePath);
+    else
+        throw Exception(ErrorCode::ExtensionNotSupported, "You can load only .dot (Graphviz) and .xml (GraphML) files.");
+}
+
+void Graph::save(const std::string& filePath) const
+{
+    const std::string extension = std::filesystem::path(filePath).extension().string();
+    if (extension == ".dot")
+        saveToGraphviz(filePath);
+    else if (extension == ".xml")
+        saveToGraphml(filePath);
+    else
+        throw Exception(ErrorCode::ExtensionNotSupported, "You can save only to .dot (Graphviz) and .xml (GraphML) files.");
+}
+
+void Graph::loadFromGraphviz(const std::string& filePath)
 {
     _properties.property("node_id", boost::get(&vertex_info::index, _graph));
 
@@ -19,13 +44,37 @@ void Graph::load(const std::string& filePath)
         throw Exception(ErrorCode::ParsingGraphvizError);
 }
 
-void Graph::save(const std::string& filePath) const
+void Graph::saveToGraphviz(const std::string& filePath) const
 {
     std::ofstream graphStream(filePath, std::ofstream::out);
     if (graphStream.fail())
         throw Exception(ErrorCode::SavingFileError, "Path to file: " + filePath);
 
     boost::write_graphviz_dp(graphStream, _graph, _properties);
+
+    graphStream.close();
+}
+
+void Graph::loadFromGraphml(const std::string& filePath)
+{
+    _properties.property("node_id", boost::get(&vertex_info::index, _graph));
+
+    _properties.property("label", boost::get(&vertex_info::label, _graph));
+
+    std::ifstream graphStream(filePath, std::ifstream::in);
+    if (graphStream.fail())
+        throw Exception(ErrorCode::ReadingFileError, "Path to file: " + filePath);
+
+    boost::read_graphml(graphStream, _graph, _properties);
+}
+
+void Graph::saveToGraphml(const std::string& filePath) const
+{
+    std::ofstream graphStream(filePath, std::ofstream::out);
+    if (graphStream.fail())
+        throw Exception(ErrorCode::SavingFileError, "Path to file: " + filePath);
+
+    boost::write_graphml(graphStream, _graph, _properties);
 
     graphStream.close();
 }
@@ -103,9 +152,10 @@ bool Graph::hasConsensus() const
 
 double Graph::getAverageOpinion() const
 {
-    int sum = 0;
-    for (const auto& vertex : _graph.m_vertices)
-        sum += vertex.m_property.label;
+    int sum = std::reduce(_graph.m_vertices.begin(), _graph.m_vertices.end(), 0,
+        [](int a, const auto& vertex) {
+        return a + vertex.m_property.label;
+    });
 
     return static_cast<double>(sum) / getNumberOfVertices();
 }

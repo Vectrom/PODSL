@@ -28,6 +28,9 @@ std::string podsl::getErrorDescription(ErrorCode errorCode, const std::string& s
     case ErrorCode::NotCompleteGraphError:
         description = "Graph is not complete";
         break;  
+    case ErrorCode::ExtensionNotSupported:
+        description = "Extension is not supported";
+        break;
     }
 
     if(!description.empty())

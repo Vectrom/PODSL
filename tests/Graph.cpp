@@ -15,6 +15,17 @@ TEST(Graph, LoadGraph)
     std::filesystem::remove_all(tempDir);
 }
 
+TEST(Graph, LoadGraphML)
+{
+    Graph graph;
+
+    EXPECT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.xml")));
+    const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSaveGraphML/";
+    std::filesystem::create_directory(tempDir);
+    EXPECT_NO_THROW(graph.save(tempDir + "test.xml"));
+    std::filesystem::remove_all(tempDir);
+}
+
 TEST(Graph, GetNumberOfVertices)
 {
     Graph graph;
@@ -44,4 +55,12 @@ TEST(Graph, GetAdjacentVertices) {
     const std::set<size_t> adjacentVertices = graph.getAdjacentVerticesIndexes(1);
     ASSERT_EQ(adjacentVertices, std::set<size_t>({0, 2, 3}));
 }
+
+TEST(Graph, GetAverageOpinion)
+{
+    Graph graph;
+    ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
+    ASSERT_EQ(graph.getAverageOpinion(), 0.0);
+}
+
 

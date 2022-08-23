@@ -27,6 +27,10 @@ namespace podsl
     public:
         void load(const std::string& filePath);
         void save(const std::string& filePath) const;
+        void loadFromGraphviz(const std::string& filePath);
+        void saveToGraphviz(const std::string& filePath) const;
+        void loadFromGraphml(const std::string& filePath);
+        void saveToGraphml(const std::string& filePath) const;
         size_t getNumberOfVertices() const;
         size_t getNumberOfEdges() const;
         std::string getIndex(size_t index) const;

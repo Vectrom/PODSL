@@ -24,7 +24,7 @@ void Simulation::startSimulation()
 {
     checkRequirements();
 
-    while (_iteration != _maxIterations + 1 && !_graph.hasConsensus())
+    while ((_iteration <= _maxIterations + 1 || _maxIterations == 0) && !_graph.hasConsensus())
     {
         doSingleStep();
         _iteration++;

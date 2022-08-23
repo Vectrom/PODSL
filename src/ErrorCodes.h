@@ -11,7 +11,8 @@ namespace podsl
         ParsingGraphvizError,
         SavingFileError,
         TooLargeGroupError,
-        NotCompleteGraphError
+        NotCompleteGraphError,
+        ExtensionNotSupported,
     };
 
     std::string getErrorDescription(ErrorCode errorCode, const std::string& suffix = std::string());
