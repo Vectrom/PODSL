@@ -45,7 +45,7 @@ void Simulation::disableAverageOpinion()
 {
     _averageOpinion = false;
 }
-#include<windows.h>
+
 void Simulation::printInfoAboutChange(const std::map<std::string, int>& changes) const
 {
     rapidjson::Document document;
@@ -85,7 +85,6 @@ void Simulation::printInfoAboutChange(const std::map<std::string, int>& changes)
     document.Accept(writer);
 
     std::cout << "[STEP]" << buffer.GetString() << std::endl;
-    OutputDebugString(buffer.GetString());
 }
 
 void podsl::Simulation::checkRequirements() const
