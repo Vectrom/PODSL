@@ -106,6 +106,8 @@ jobs:
           python-version: 3.9
 
       - name: Build
+        env:
+          CXX: g++-10
         run: |
           cmake -E remove_directory build
           cmake -DCMAKE_BUILD_TYPE=Release -B build
