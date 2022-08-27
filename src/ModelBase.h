@@ -12,4 +12,7 @@ namespace podsl
         virtual ModelType getModelType() const;
         virtual ~ModelBase() = default;
     };
+
+    template <typename T>
+    concept DerivedFromModelBase = std::is_base_of_v<ModelBase, T>;
 }

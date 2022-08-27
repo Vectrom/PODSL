@@ -16,10 +16,9 @@ namespace podsl
         void enablePrintingInfoAboutChanges();
         void disablePrintingInfoAboutChanges();
         void saveResultInfoToFile(const std::string& output);
-        template <typename ModelT, typename = typename std::enable_if<std::is_base_of_v<ModelBase, ModelT>>::type>
-        void setModel(ModelT model)
+        void setModel(DerivedFromModelBase auto model)
         {
-            _model = std::make_unique<ModelT>(std::move(model));
+            _model = std::make_unique<decltype(model)>(std::move(model));
         }
         const Graph& getGraph() const;
         void setGraph(Graph graph);

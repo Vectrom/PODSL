@@ -63,4 +63,3 @@ TEST(Graph, GetAverageOpinion)
     ASSERT_EQ(graph.getAverageOpinion(), 0.0);
 }
 
-

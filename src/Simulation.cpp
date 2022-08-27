@@ -4,7 +4,18 @@
 #include "SznajdModel.h"
 #include "VoterModel.h"
 #define RAPIDJSON_NOMEMBERITERATORCLASS 
+
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable : 5054)
+#endif
+
 #include <rapidjson/document.h>
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+
 #include <rapidjson/istreamwrapper.h>
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/prettywriter.h>
