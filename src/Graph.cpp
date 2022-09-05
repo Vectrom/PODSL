@@ -110,6 +110,12 @@ std::set<size_t> Graph::getAdjacentVerticesIndexes(size_t index) const
     return std::set<size_t>(adjacentVertices.first, adjacentVertices.second);
 }
 
+size_t Graph::getNumberOfAdjacentVertices(size_t index) const
+{
+    auto adjacentVertices = getAdjacentVerticesIndexes(index);
+    return adjacentVertices.size();
+}
+
 size_t Graph::getRandomVertexIndex() const
 {
     std::uniform_int_distribution<std::mt19937::result_type> udist(0, static_cast<unsigned int>(getNumberOfVertices() - 1));

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <filesystem>
+#include "MajorityModel.h"
 #include "SznajdModel.h"
 #include "VoterModel.h"
 #include "PODSLEnums.h"
@@ -105,5 +106,28 @@ TEST(Simulation, MajoritySimulationWithParameterFromConfig)
     simulation.saveResultInfoToFile(tempDir + "result.json");
 
     std::filesystem::remove(pathToConfigFile);
+    std::filesystem::remove_all(tempDir);
+}
+
+TEST(Simulation, MajoritySimulationOnRegularSquare)
+{
+    MajorityModel model(3);
+
+    Graph graph;
+    ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("regularSquare.dot")));
+
+    Simulation simulation;
+    simulation.setModel(model);
+    simulation.setGraph(graph);
+    simulation.enableAverageOpinion();
+    simulation.startSimulation();
+
+    const std::string tempDir = std::filesystem::temp_directory_path().string() + "/MajoritySimulationOnRegularSquare/";
+    std::filesystem::create_directory(tempDir);
+
+    graph = simulation.getGraph();
+    ASSERT_NO_THROW(graph.save(tempDir + "test.dot"));
+    simulation.saveResultInfoToFile(tempDir + "result.json");
+
     std::filesystem::remove_all(tempDir);
 }

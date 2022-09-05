@@ -10,10 +10,25 @@ MajorityModel::MajorityModel(uint64_t groupSize) :
 
 std::map<std::string, int> MajorityModel::calculateOneStep(Graph& graph)
 {
-    std::set<size_t> group;
-    while(group.size() < _groupSize)
-        group.insert(graph.getRandomVertexIndex());
+    if (_groupSize == 0)
+        return {};
 
+    std::set<size_t> group;
+    const size_t vertexIndex = graph.getRandomVertexIndex();
+    group.insert(vertexIndex);
+
+    const size_t numberOfAdjacentVertices = graph.getNumberOfAdjacentVertices(vertexIndex);
+    if (numberOfAdjacentVertices <= _groupSize - 1)
+    {
+        auto adjacentVertices = graph.getAdjacentVerticesIndexes(vertexIndex);
+        group.insert(adjacentVertices.begin(), adjacentVertices.end());
+    }
+
+    while(group.size() < _groupSize)
+    {
+        group.insert(graph.getRandomAdjacentVertexIndex(vertexIndex));
+    }
+        
     size_t positiveOpinionsCount = 0;
     size_t negativeOpinionsCount = 0;
 
@@ -49,7 +64,4 @@ void MajorityModel::checkMajorityModelRequirements(const Graph& graph) const
 {
     if (_groupSize > graph.getNumberOfVertices())
         throw Exception(ErrorCode::TooLargeGroupError);
-
-    if (!graph.isComplete())
-        throw Exception(ErrorCode::NotCompleteGraphError, "MajorityModel can be used only for complete graph.");
 }
