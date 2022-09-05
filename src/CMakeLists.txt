@@ -6,6 +6,7 @@ set(MODULE_SOURCES
     Graph.cpp
     MajorityModel.cpp
     ModelBase.cpp
+    PajekParser.cpp
     PODSLEnums.cpp
     QVoterModel.cpp
     Simulation.cpp
@@ -19,6 +20,7 @@ set(MODULE_HEADERS
     Graph.h
     MajorityModel.h
     ModelBase.h
+    PajekParser.h
     PODSL.h
     PODSLEnums.h
     QVoterModel.h
