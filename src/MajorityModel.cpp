@@ -23,12 +23,14 @@ std::map<std::string, int> MajorityModel::calculateOneStep(Graph& graph)
         auto adjacentVertices = graph.getAdjacentVerticesIndexes(vertexIndex);
         group.insert(adjacentVertices.begin(), adjacentVertices.end());
     }
-
-    while(group.size() < _groupSize)
+    else
     {
-        group.insert(graph.getRandomAdjacentVertexIndex(vertexIndex));
+        while (group.size() < _groupSize)
+        {
+            group.insert(graph.getRandomAdjacentVertexIndex(vertexIndex));
+        }
     }
-        
+
     size_t positiveOpinionsCount = 0;
     size_t negativeOpinionsCount = 0;
 

@@ -111,7 +111,7 @@ TEST(Simulation, MajoritySimulationWithParameterFromConfig)
 
 TEST(Simulation, MajoritySimulationOnRegularSquare)
 {
-    MajorityModel model(3);
+    MajorityModel model(5);
 
     Graph graph;
     ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("regularSquare.dot")));
