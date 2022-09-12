@@ -14,17 +14,17 @@ set(MODULE_SOURCES
 )
 
 set(MODULE_HEADERS
-    ErrorCodes.h
-    Exception.h
-    Graph.h
-    MajorityModel.h
-    ModelBase.h
-    PODSL.h
-    PODSLEnums.h
-    QVoterModel.h
-    Simulation.h
-    SznajdModel.h
-    VoterModel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/ErrorCodes.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Exception.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Graph.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/MajorityModel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/ModelBase.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/PODSL.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/PODSLEnums.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/QVoterModel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Simulation.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/SznajdModel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/VoterModel.h
 )
 
 add_library(${MODULE_NAME}
@@ -35,6 +35,7 @@ add_library(${MODULE_NAME}
 
 add_library(${MODULE_NAME}::${MODULE_NAME} ALIAS ${MODULE_NAME})
 
+set_target_properties(${MODULE_NAME} PROPERTIES PUBLIC_HEADER "${MODULE_HEADERS}")
 target_include_directories(${MODULE_NAME}
     PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}
