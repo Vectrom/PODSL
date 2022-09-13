@@ -1,0 +1,5 @@
+[requires]
+podsl/1.0@vectrom/testing
+
+[generators]
+cmake_find_package_multi

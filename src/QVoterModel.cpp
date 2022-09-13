@@ -3,9 +3,9 @@
 
 using namespace podsl;
 
-podsl::QVoterModel::QVoterModel(uint64_t q, double probability) :
-    _q(q),
-    _probability(probability)
+podsl::QVoterModel::QVoterModel(uint64_t q/*, double probability*/) :
+    _q(q)/*,
+    _probability(probability)*/
 {
 }
 

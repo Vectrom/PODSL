@@ -16,7 +16,7 @@
 
 namespace podsl
 {
-    struct vertex_info
+    struct vertexInfo
     {
         std::string index;
         int label;
@@ -47,7 +47,7 @@ namespace podsl
         bool hasSelfLoops() const;
 
     private:
-        boost::adjacency_list <boost::vecS, boost::vecS, boost::undirectedS, vertex_info> _graph;
+        boost::adjacency_list <boost::vecS, boost::vecS, boost::undirectedS, vertexInfo> _graph;
         boost::dynamic_properties _properties;
     };
 }
