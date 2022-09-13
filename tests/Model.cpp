@@ -9,7 +9,7 @@ using namespace podsl;
 TEST(Model, ModelType) {
     EXPECT_EQ(MajorityModel(5).getModelType(), ModelType::Majority);
     EXPECT_EQ(SznajdModel().getModelType(), ModelType::Sznajd);
-    EXPECT_EQ(QVoterModel().getModelType(), ModelType::QVoter);
+    EXPECT_EQ(QVoterModel(3).getModelType(), ModelType::QVoter);
     EXPECT_EQ(VoterModel().getModelType(), ModelType::Voter);
 
     class TestModel : public ModelBase

@@ -32,9 +32,9 @@ void Graph::save(const std::string& filePath) const
 
 void Graph::loadFromGraphviz(const std::string& filePath)
 {
-    _properties.property("node_id", boost::get(&vertex_info::index, _graph));
+    _properties.property("node_id", boost::get(&vertexInfo::index, _graph));
 
-    _properties.property("label", boost::get(&vertex_info::label, _graph));
+    _properties.property("label", boost::get(&vertexInfo::label, _graph));
 
     std::ifstream graphStream(filePath, std::ifstream::in);
     if (graphStream.fail())
@@ -57,9 +57,9 @@ void Graph::saveToGraphviz(const std::string& filePath) const
 
 void Graph::loadFromGraphml(const std::string& filePath)
 {
-    _properties.property("node_id", boost::get(&vertex_info::index, _graph));
+    _properties.property("node_id", boost::get(&vertexInfo::index, _graph));
 
-    _properties.property("label", boost::get(&vertex_info::label, _graph));
+    _properties.property("label", boost::get(&vertexInfo::label, _graph));
 
     std::ifstream graphStream(filePath, std::ifstream::in);
     if (graphStream.fail())
@@ -108,6 +108,12 @@ std::set<size_t> Graph::getAdjacentVerticesIndexes(size_t index) const
 {
     auto adjacentVertices = boost::adjacent_vertices(index, _graph);
     return std::set<size_t>(adjacentVertices.first, adjacentVertices.second);
+}
+
+size_t Graph::getNumberOfAdjacentVertices(size_t index) const
+{
+    auto adjacentVertices = getAdjacentVerticesIndexes(index);
+    return adjacentVertices.size();
 }
 
 size_t Graph::getRandomVertexIndex() const
@@ -180,4 +186,16 @@ bool podsl::Graph::hasSelfLoops() const
             return true;
     }
     return false;
+}
+
+size_t Graph::getNumberOfPositiveOpinions() const
+{
+    return std::count_if(_graph.m_vertices.begin(), _graph.m_vertices.end(), [this](const auto& vertex) {
+        return vertex.m_property.label == 1; });
+}
+
+size_t Graph::getNumberOfNegativeOpinions() const
+{
+    return std::count_if(_graph.m_vertices.begin(), _graph.m_vertices.end(), [this](const auto& vertex) {
+        return vertex.m_property.label == -1; });
 }

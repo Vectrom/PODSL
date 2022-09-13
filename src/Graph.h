@@ -16,7 +16,7 @@
 
 namespace podsl
 {
-    struct vertex_info
+    struct vertexInfo
     {
         std::string index;
         int label;
@@ -37,6 +37,7 @@ namespace podsl
         int getOpinion(size_t index) const;
         void setOpinion(size_t index, int opinion);
         std::set<size_t> getAdjacentVerticesIndexes(size_t index) const;
+        size_t getNumberOfAdjacentVertices(size_t index) const;
         size_t getRandomVertexIndex() const;
         size_t getRandomAdjacentVertexIndex(size_t index) const;
         bool hasAdjacentVertices(size_t index) const;
@@ -44,9 +45,11 @@ namespace podsl
         double getAverageOpinion() const;
         bool isComplete() const;
         bool hasSelfLoops() const;
+        size_t getNumberOfPositiveOpinions() const;
+        size_t getNumberOfNegativeOpinions() const;
 
     private:
-        boost::adjacency_list <boost::vecS, boost::vecS, boost::undirectedS, vertex_info> _graph;
+        boost::adjacency_list <boost::vecS, boost::vecS, boost::undirectedS, vertexInfo> _graph;
         boost::dynamic_properties _properties;
     };
 }
