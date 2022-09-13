@@ -95,7 +95,7 @@ void Simulation::printInfoAboutChange(const std::map<std::string, int>& changes)
 
         rapidjson::Value positiveOpinions(rapidjson::kObjectType);
         rapidjson::Value positiveOpinionsValues(rapidjson::kArrayType);
-        positiveOpinionsValues.PushBack(_positiveOpinions.back(), allocator);
+        positiveOpinionsValues.PushBack(static_cast<uint64_t>(_positiveOpinions.back()), allocator);
         positiveOpinions
             .AddMember("name", "positive-opinions", allocator)
             .AddMember("values", positiveOpinionsValues, allocator);
@@ -103,7 +103,7 @@ void Simulation::printInfoAboutChange(const std::map<std::string, int>& changes)
 
         rapidjson::Value negativeOpinions(rapidjson::kObjectType);
         rapidjson::Value negativeOpinionsValues(rapidjson::kArrayType);
-        negativeOpinionsValues.PushBack(_negativeOpinions.back(), allocator);
+        negativeOpinionsValues.PushBack(static_cast<uint64_t>(_negativeOpinions.back()), allocator);
         negativeOpinions
             .AddMember("name", "negative-opinions", allocator)
             .AddMember("values", negativeOpinionsValues, allocator);
