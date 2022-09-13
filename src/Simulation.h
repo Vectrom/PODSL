@@ -15,6 +15,8 @@ namespace podsl
         void disableAverageOpinion();
         void enablePrintingInfoAboutChanges();
         void disablePrintingInfoAboutChanges();
+        void enableCountingOpinions();
+        void disableCountingOpinions();
         void saveResultInfoToFile(const std::string& output);
         void setModel(DerivedFromModelBase auto model)
         {
@@ -34,7 +36,10 @@ namespace podsl
         uint64_t _iteration = 1;
         bool _averageOpinion = false;
         bool _printingInfoAboutChanges = false;
+        bool _countingOpinions = false;
         std::vector<double> _averageOpinions;
+        std::vector<size_t> _positiveOpinions;
+        std::vector<size_t> _negativeOpinions;
         Graph _graph;
     };
 }

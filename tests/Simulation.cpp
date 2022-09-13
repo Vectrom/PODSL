@@ -121,6 +121,7 @@ TEST(Simulation, MajoritySimulationOnRegularSquare)
     simulation.setModel(model);
     simulation.setGraph(graph);
     simulation.enableAverageOpinion();
+    simulation.enableCountingOpinions();
     simulation.startSimulation();
 
     const std::string tempDir = std::filesystem::temp_directory_path().string() + "/MajoritySimulationOnRegularSquare/";

@@ -45,6 +45,8 @@ namespace podsl
         double getAverageOpinion() const;
         bool isComplete() const;
         bool hasSelfLoops() const;
+        size_t getNumberOfPositiveOpinions() const;
+        size_t getNumberOfNegativeOpinions() const;
 
     private:
         boost::adjacency_list <boost::vecS, boost::vecS, boost::undirectedS, vertexInfo> _graph;

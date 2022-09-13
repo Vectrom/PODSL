@@ -89,6 +89,27 @@ void Simulation::printInfoAboutChange(const std::map<std::string, int>& changes)
     
         statsArray.PushBack(averageOpinion, allocator);
     }
+
+    if (_countingOpinions)
+    {
+
+        rapidjson::Value positiveOpinions(rapidjson::kObjectType);
+        rapidjson::Value positiveOpinionsValues(rapidjson::kArrayType);
+        positiveOpinionsValues.PushBack(_positiveOpinions.back(), allocator);
+        positiveOpinions
+            .AddMember("name", "positive-opinions", allocator)
+            .AddMember("values", positiveOpinionsValues, allocator);
+        statsArray.PushBack(positiveOpinions, allocator);
+
+        rapidjson::Value negativeOpinions(rapidjson::kObjectType);
+        rapidjson::Value negativeOpinionsValues(rapidjson::kArrayType);
+        negativeOpinionsValues.PushBack(_negativeOpinions.back(), allocator);
+        negativeOpinions
+            .AddMember("name", "negative-opinions", allocator)
+            .AddMember("values", negativeOpinionsValues, allocator);
+        statsArray.PushBack(negativeOpinions, allocator);
+    }
+
     document.AddMember("stats", statsArray, allocator);
 
     rapidjson::StringBuffer buffer;
@@ -114,6 +135,12 @@ void Simulation::doSingleStep()
     if (_averageOpinion)
     {
         _averageOpinions.push_back(_graph.getAverageOpinion());
+    }
+
+    if(_countingOpinions)
+    {
+        _positiveOpinions.push_back(_graph.getNumberOfPositiveOpinions());
+        _negativeOpinions.push_back(_graph.getNumberOfNegativeOpinions());
     }
 
     if (_printingInfoAboutChanges)
@@ -143,6 +170,31 @@ void Simulation::saveResultInfoToFile(const std::string& output)
 
         statsArray.PushBack(averageOpinion, allocator);
     }
+
+    if (_countingOpinions)
+    {
+        rapidjson::Value positiveOpinions(rapidjson::kObjectType);
+        rapidjson::Value positiveOpinionsValues(rapidjson::kArrayType);
+
+        for (const size_t opinion : _positiveOpinions)
+            positiveOpinionsValues.PushBack(opinion, allocator);
+        positiveOpinions
+            .AddMember("name", "positive-opinions", allocator)
+            .AddMember("values", positiveOpinionsValues, allocator);
+
+        statsArray.PushBack(positiveOpinions, allocator);
+
+        rapidjson::Value negativeOpinions(rapidjson::kObjectType);
+        rapidjson::Value negativeOpinionsValues(rapidjson::kArrayType);
+
+        for (const size_t opinion : _negativeOpinions)
+            negativeOpinionsValues.PushBack(opinion, allocator);
+        negativeOpinions
+            .AddMember("name", "negative-opinions", allocator)
+            .AddMember("values", negativeOpinionsValues, allocator);
+
+        statsArray.PushBack(negativeOpinions, allocator);
+    }
     document.AddMember("stats", statsArray, allocator);
 
     std::ofstream outputStream(output);
@@ -166,6 +218,17 @@ void Simulation::disablePrintingInfoAboutChanges()
 {
     _printingInfoAboutChanges = false;
 }
+
+void Simulation::enableCountingOpinions()
+{
+    _countingOpinions = true;
+}
+
+void Simulation::disableCountingOpinions()
+{
+    _countingOpinions = false;
+}
+
 
 void Simulation::readConfig(const std::string& pathToConfig)
 {
@@ -197,6 +260,9 @@ void Simulation::readConfig(const std::string& pathToConfig)
 
     if (document.HasMember("averageOpinion") && document["averageOpinion"].GetBool())
         enableAverageOpinion();
+
+    if (document.HasMember("countingOpinions") && document["countingOpinions"].GetBool())
+        enableCountingOpinions();
 
     if (document.HasMember("printInfoAboutChanges") && document["printInfoAboutChanges"].GetBool())
         enablePrintingInfoAboutChanges();

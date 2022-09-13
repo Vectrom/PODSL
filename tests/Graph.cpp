@@ -4,25 +4,25 @@
 #include "TestUtils.h"
 
 using namespace podsl;
-TEST(Graph, LoadGraph)
+TEST(Graph, LoadAndSaveGraph)
 {
     Graph graph;
 
-    EXPECT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
+    ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
     const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSave/";
     std::filesystem::create_directory(tempDir);
-    EXPECT_NO_THROW(graph.save(tempDir + "test.dot"));
+    ASSERT_NO_THROW(graph.save(tempDir + "test.dot"));
     std::filesystem::remove_all(tempDir);
 }
 
-TEST(Graph, LoadGraphML)
+TEST(Graph, LoadAndSaveGraphML)
 {
     Graph graph;
 
-    EXPECT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.xml")));
+    ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.xml")));
     const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSaveGraphML/";
     std::filesystem::create_directory(tempDir);
-    EXPECT_NO_THROW(graph.save(tempDir + "test.xml"));
+    ASSERT_NO_THROW(graph.save(tempDir + "test.xml"));
     std::filesystem::remove_all(tempDir);
 }
 
