@@ -225,12 +225,12 @@ bool podsl::Graph::hasSelfLoops() const
 
 size_t Graph::getNumberOfPositiveOpinions() const
 {
-    return std::count_if(_graph.m_vertices.begin(), _graph.m_vertices.end(), [this](const auto& vertex) {
+    return std::count_if(_graph.m_vertices.begin(), _graph.m_vertices.end(), [](const auto& vertex) {
         return vertex.m_property.label == 1; });
 }
 
 size_t Graph::getNumberOfNegativeOpinions() const
 {
-    return std::count_if(_graph.m_vertices.begin(), _graph.m_vertices.end(), [this](const auto& vertex) {
+    return std::count_if(_graph.m_vertices.begin(), _graph.m_vertices.end(), [](const auto& vertex) {
         return vertex.m_property.label == -1; });
 }

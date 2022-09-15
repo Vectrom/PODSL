@@ -6,7 +6,6 @@ set(MODULE_SOURCES
     Graph.cpp
     MajorityModel.cpp
     ModelBase.cpp
-    PajekParser.cpp
     PODSLEnums.cpp
     QVoterModel.cpp
     Simulation.cpp

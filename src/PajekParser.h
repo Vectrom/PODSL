@@ -17,7 +17,7 @@ namespace podsl
             if (!in.good())
                 throw Exception(ErrorCode::ParsingPajekError, "Error during parsing Pajek NET file.");
 
-            std::map<std::string, boost::graph_traits<MutableGraph>::vertex_descriptor> vertices;
+            std::map<std::string, MutableGraph::vertex_descriptor> vertices;
             bool readingVertices = false, readingEdges = false;
 
             for (std::string line; std::getline(in, line);)
