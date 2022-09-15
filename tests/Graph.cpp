@@ -9,6 +9,9 @@ TEST(Graph, LoadAndSaveGraph)
     Graph graph;
 
     ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.dot")));
+    EXPECT_EQ(graph.getNumberOfVertices(), 4u);
+    EXPECT_EQ(graph.getNumberOfEdges(), 6u);
+    EXPECT_EQ(graph.getOpinion(0), 1);
     const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSave/";
     std::filesystem::create_directory(tempDir);
     ASSERT_NO_THROW(graph.save(tempDir + "test.dot"));
@@ -19,10 +22,28 @@ TEST(Graph, LoadAndSaveGraphML)
 {
     Graph graph;
 
-    ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.xml")));
+    ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.graphml")));
+    EXPECT_EQ(graph.getNumberOfVertices(), 4u);
+    EXPECT_EQ(graph.getNumberOfEdges(), 6u);
+    EXPECT_EQ(graph.getOpinion(0), 1);
     const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSaveGraphML/";
     std::filesystem::create_directory(tempDir);
     ASSERT_NO_THROW(graph.save(tempDir + "test.xml"));
+    std::filesystem::remove_all(tempDir);
+}
+
+TEST(Graph, LoadAndSavePajekNET)
+{
+    Graph graph;
+
+    ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.net")));
+    EXPECT_EQ(graph.getNumberOfVertices(), 4u);
+    EXPECT_EQ(graph.getNumberOfEdges(), 6u);
+    EXPECT_EQ(graph.getOpinion(0), 1);
+    const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSavePajekNET/";
+
+    std::filesystem::create_directory(tempDir);
+    ASSERT_NO_THROW(graph.save(tempDir + "test.net"));
     std::filesystem::remove_all(tempDir);
 }
 
