@@ -28,7 +28,7 @@ TEST(Graph, LoadAndSaveGraphML)
     EXPECT_EQ(graph.getOpinion(0), 1);
     const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSaveGraphML/";
     std::filesystem::create_directory(tempDir);
-    ASSERT_NO_THROW(graph.save(tempDir + "test.xml"));
+    ASSERT_NO_THROW(graph.save(tempDir + "test.graphml"));
     std::filesystem::remove_all(tempDir);
 }
 
