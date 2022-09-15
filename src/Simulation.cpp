@@ -177,7 +177,7 @@ void Simulation::saveResultInfoToFile(const std::string& output)
         rapidjson::Value positiveOpinionsValues(rapidjson::kArrayType);
 
         for (const size_t opinion : _positiveOpinions)
-            positiveOpinionsValues.PushBack(opinion, allocator);
+            positiveOpinionsValues.PushBack(static_cast<uint64_t>(opinion), allocator);
         positiveOpinions
             .AddMember("name", "positive-opinions", allocator)
             .AddMember("values", positiveOpinionsValues, allocator);
@@ -188,7 +188,7 @@ void Simulation::saveResultInfoToFile(const std::string& output)
         rapidjson::Value negativeOpinionsValues(rapidjson::kArrayType);
 
         for (const size_t opinion : _negativeOpinions)
-            negativeOpinionsValues.PushBack(opinion, allocator);
+            negativeOpinionsValues.PushBack(static_cast<uint64_t>(opinion), allocator);
         negativeOpinions
             .AddMember("name", "negative-opinions", allocator)
             .AddMember("values", negativeOpinionsValues, allocator);
