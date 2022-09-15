@@ -36,7 +36,7 @@ TEST(Simulation, SimpleSznajdSimulation)
 {
     Graph graph;
 
-    ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.xml")));
+    ASSERT_NO_THROW(graph.load(TestUtils::getExamplesDir("simpleGraph.graphml")));
     const std::string tempDir = std::filesystem::temp_directory_path().string() + "/testSznajdSimulation/";
     std::filesystem::create_directory(tempDir);
 
@@ -46,7 +46,7 @@ TEST(Simulation, SimpleSznajdSimulation)
     simulation.startSimulation();
 
     graph = simulation.getGraph();
-    ASSERT_NO_THROW(graph.save(tempDir + "test.xml"));
+    ASSERT_NO_THROW(graph.save(tempDir + "test.graphml"));
     simulation.saveResultInfoToFile(tempDir + "result.json");
     std::filesystem::remove_all(tempDir);
 }

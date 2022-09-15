@@ -9,6 +9,7 @@ namespace podsl
         NotImplemented = 101,
         ReadingFileError,
         ParsingGraphvizError,
+        ParsingPajekError,
         SavingFileError,
         TooLargeGroupError,
         NotCompleteGraphError,

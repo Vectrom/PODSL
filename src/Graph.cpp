@@ -1,5 +1,6 @@
 #include "Graph.h"
 #include "Exception.h"
+#include "PajekParser.h"
 #include <boost/graph/graphml.hpp>
 #include <boost/graph/graph_utility.hpp>
 #include <filesystem>
@@ -13,8 +14,10 @@ void Graph::load(const std::string& filePath)
     const std::string extension = std::filesystem::path(filePath).extension().string();
     if (extension == ".dot")
         loadFromGraphviz(filePath);
-    else if (extension == ".xml")
-        loadFromGraphml(filePath);
+    else if (extension == ".graphml")
+        loadFromGraphMl(filePath);
+    else if (extension == ".net")
+        loadFromPajekNet(filePath);
     else
         throw Exception(ErrorCode::ExtensionNotSupported, "You can load only .dot (Graphviz) and .xml (GraphML) files.");
 }
@@ -24,8 +27,10 @@ void Graph::save(const std::string& filePath) const
     const std::string extension = std::filesystem::path(filePath).extension().string();
     if (extension == ".dot")
         saveToGraphviz(filePath);
-    else if (extension == ".xml")
-        saveToGraphml(filePath);
+    else if (extension == ".graphml")
+        saveToGraphMl(filePath);
+    else if (extension == ".net")
+        saveToPajekNet(filePath);
     else
         throw Exception(ErrorCode::ExtensionNotSupported, "You can save only to .dot (Graphviz) and .xml (GraphML) files.");
 }
@@ -42,6 +47,8 @@ void Graph::loadFromGraphviz(const std::string& filePath)
 
     if (!boost::read_graphviz(graphStream, _graph, _properties))
         throw Exception(ErrorCode::ParsingGraphvizError);
+
+    graphStream.close();
 }
 
 void Graph::saveToGraphviz(const std::string& filePath) const
@@ -55,7 +62,7 @@ void Graph::saveToGraphviz(const std::string& filePath) const
     graphStream.close();
 }
 
-void Graph::loadFromGraphml(const std::string& filePath)
+void Graph::loadFromGraphMl(const std::string& filePath)
 {
     _properties.property("node_id", boost::get(&vertexInfo::index, _graph));
 
@@ -66,15 +73,43 @@ void Graph::loadFromGraphml(const std::string& filePath)
         throw Exception(ErrorCode::ReadingFileError, "Path to file: " + filePath);
 
     boost::read_graphml(graphStream, _graph, _properties);
+
+    graphStream.close();
 }
 
-void Graph::saveToGraphml(const std::string& filePath) const
+void Graph::saveToGraphMl(const std::string& filePath) const
 {
     std::ofstream graphStream(filePath, std::ofstream::out);
     if (graphStream.fail())
         throw Exception(ErrorCode::SavingFileError, "Path to file: " + filePath);
 
     boost::write_graphml(graphStream, _graph, _properties);
+
+    graphStream.close();
+}
+
+void Graph::loadFromPajekNet(const std::string& filePath)
+{
+    _properties.property("node_id", boost::get(&vertexInfo::index, _graph));
+
+    _properties.property("label", boost::get(&vertexInfo::label, _graph));
+
+    std::ifstream graphStream(filePath, std::ifstream::in);
+    if (graphStream.fail())
+        throw Exception(ErrorCode::ReadingFileError, "Path to file: " + filePath);
+
+    PajekParser::readPajekNet(graphStream, _graph);
+
+    graphStream.close();
+}
+
+void Graph::saveToPajekNet(const std::string& filePath) const
+{
+    std::ofstream graphStream(filePath, std::ofstream::out);
+    if (graphStream.fail())
+        throw Exception(ErrorCode::SavingFileError, "Path to file: " + filePath);
+
+    PajekParser::writePajekNet(graphStream, _graph);
 
     graphStream.close();
 }
@@ -190,12 +225,12 @@ bool podsl::Graph::hasSelfLoops() const
 
 size_t Graph::getNumberOfPositiveOpinions() const
 {
-    return std::count_if(_graph.m_vertices.begin(), _graph.m_vertices.end(), [this](const auto& vertex) {
+    return std::count_if(_graph.m_vertices.begin(), _graph.m_vertices.end(), [](const auto& vertex) {
         return vertex.m_property.label == 1; });
 }
 
 size_t Graph::getNumberOfNegativeOpinions() const
 {
-    return std::count_if(_graph.m_vertices.begin(), _graph.m_vertices.end(), [this](const auto& vertex) {
+    return std::count_if(_graph.m_vertices.begin(), _graph.m_vertices.end(), [](const auto& vertex) {
         return vertex.m_property.label == -1; });
 }

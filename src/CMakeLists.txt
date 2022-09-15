@@ -9,6 +9,7 @@ set(MODULE_SOURCES
     PODSLEnums.cpp
     QVoterModel.cpp
     Simulation.cpp
+    StringUtils.cpp
     SznajdModel.cpp
     VoterModel.cpp
 )
@@ -19,10 +20,12 @@ set(MODULE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/Graph.h
     ${CMAKE_CURRENT_SOURCE_DIR}/MajorityModel.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ModelBase.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/PajekParser.h
     ${CMAKE_CURRENT_SOURCE_DIR}/PODSL.h
     ${CMAKE_CURRENT_SOURCE_DIR}/PODSLEnums.h
     ${CMAKE_CURRENT_SOURCE_DIR}/QVoterModel.h
     ${CMAKE_CURRENT_SOURCE_DIR}/Simulation.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/StringUtils.h
     ${CMAKE_CURRENT_SOURCE_DIR}/SznajdModel.h
     ${CMAKE_CURRENT_SOURCE_DIR}/VoterModel.h
 )
