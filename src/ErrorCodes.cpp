@@ -19,6 +19,9 @@ std::string podsl::getErrorDescription(ErrorCode errorCode, const std::string& s
     case ErrorCode::ParsingGraphvizError:
         description = "Parsing Graphviz error";
         break;
+    case ErrorCode::ParsingPajekError:
+        description = "Parsing Pajek NET error";
+        break;
     case ErrorCode::SavingFileError:
         description = "Saving file error";
         break;

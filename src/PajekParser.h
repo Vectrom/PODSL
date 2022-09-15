@@ -11,13 +11,12 @@ namespace podsl
     class PajekParser
     {
     public:
-        template <typename MutableGraph>
-        static void readPajekNet(std::istream& in, MutableGraph& graph)
+        static void readPajekNet(std::istream& in, auto& graph)
         {
             if (!in.good())
                 throw Exception(ErrorCode::ParsingPajekError, "Error during parsing Pajek NET file.");
 
-            std::map<std::string, MutableGraph::vertex_descriptor> vertices;
+            std::map<std::string, boost::adjacency_list<>::vertex_descriptor> vertices;
             bool readingVertices = false, readingEdges = false;
 
             for (std::string line; std::getline(in, line);)
@@ -64,8 +63,7 @@ namespace podsl
             }
         }
 
-        template <typename MutableGraph>
-        static void writePajekNet(std::ostream& out, const MutableGraph& graph)
+        static void writePajekNet(std::ostream& out, const auto& graph)
         {
             if (!out.good())
                 throw Exception(ErrorCode::SavingFileError, "Error during saving Pajek NET file.");
@@ -84,8 +82,7 @@ namespace podsl
         }
 
     private:
-        template <typename MutableGraph>
-        static auto addVertex(MutableGraph& graph, const std::string& index, int label)
+        static auto addVertex(auto& graph, const std::string& index, int label)
         {
             const auto vertex = boost::add_vertex(graph);
             graph[vertex].index = index;
@@ -94,8 +91,7 @@ namespace podsl
             return vertex;
         }
 
-        template <typename VerticesVector>
-        static void writeVertices(std::ostream& out, const VerticesVector& vertices)
+        static void writeVertices(std::ostream& out, const auto& vertices)
         {
             out << "*Vertices " << vertices.size() << '\n';
             for (const auto& vertex : vertices)
@@ -104,8 +100,7 @@ namespace podsl
             }
         }
 
-        template <typename MutableGraph, typename EdgesVector>
-        static void writeEdges(std::ostream& out, const MutableGraph& graph, const EdgesVector& edges)
+        static void writeEdges(std::ostream& out, const auto& graph, const auto& edges)
         {
             out << "*Edges\n";
             for (const auto& edge : edges)
